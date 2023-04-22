@@ -25,6 +25,8 @@ public class EditPoemFragment extends Fragment {
     private EditText editPoemText;
     private ImageView buttonBold, buttonItalic, buttonAlignLeft, buttonAlignCenter, buttonAlignRight;
 
+    private StyleSpan selectedBoldSpan;
+
     private void toggleBoldStyle() {
         // Get the selected text from EditText
         int startSelection = editPoemText.getSelectionStart();
@@ -36,7 +38,30 @@ public class EditPoemFragment extends Fragment {
         boolean hasBold = false;
         for (StyleSpan styleSpan : styleSpans) {
             if (styleSpan.getStyle() == Typeface.BOLD) {
+                int spanStart = text.getSpanStart(styleSpan);
+                int spanEnd = text.getSpanEnd(styleSpan);
                 text.removeSpan(styleSpan);
+                if (spanStart > startSelection && spanEnd < endSelection) {
+                    for (StyleSpan boldSpan : text.getSpans(startSelection, endSelection, StyleSpan.class)) {
+                        if (boldSpan.getStyle() == Typeface.BOLD) {
+                            text.removeSpan(boldSpan);
+                        }
+                    }
+                    hasBold = true;
+                    break;
+                }
+                if (spanStart <= startSelection) {
+                    text.setSpan(new StyleSpan(Typeface.BOLD), spanStart, startSelection, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                }
+                if (spanEnd >= endSelection) {
+                    text.setSpan(new StyleSpan(Typeface.BOLD), endSelection, spanEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                }
+                if (spanStart > startSelection) {
+                    text.setSpan(new StyleSpan(Typeface.BOLD), endSelection, spanEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                }
+                if (spanEnd < endSelection) {
+                    text.setSpan(new StyleSpan(Typeface.BOLD), spanStart, startSelection, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                }
                 hasBold = true;
             }
         }
@@ -62,7 +87,30 @@ public class EditPoemFragment extends Fragment {
         boolean hasItalic = false;
         for (StyleSpan styleSpan : styleSpans) {
             if (styleSpan.getStyle() == Typeface.ITALIC) {
+                int spanStart = text.getSpanStart(styleSpan);
+                int spanEnd = text.getSpanEnd(styleSpan);
                 text.removeSpan(styleSpan);
+                if (spanStart > startSelection && spanEnd < endSelection) {
+                    for (StyleSpan boldSpan : text.getSpans(startSelection, endSelection, StyleSpan.class)) {
+                        if (boldSpan.getStyle() == Typeface.ITALIC) {
+                            text.removeSpan(boldSpan);
+                        }
+                    }
+                    hasItalic = true;
+                    break;
+                }
+                if (spanStart <= startSelection) {
+                    text.setSpan(new StyleSpan(Typeface.ITALIC), spanStart, startSelection, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                }
+                if (spanEnd >= endSelection) {
+                    text.setSpan(new StyleSpan(Typeface.ITALIC), endSelection, spanEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                }
+                if (spanStart > startSelection) {
+                    text.setSpan(new StyleSpan(Typeface.ITALIC), endSelection, spanEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                }
+                if (spanEnd < endSelection) {
+                    text.setSpan(new StyleSpan(Typeface.ITALIC), spanStart, startSelection, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                }
                 hasItalic = true;
             }
         }
