@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark"
+    tools:context=".RegistrationActivity">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/main_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:background="?attr/colorPrimary">
+
+        <TextView
+            android:id="@+id/app_name"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="serif"
+            android:text="@string/app_name"
+            android:textColor="@color/dark"
+            android:textSize="30sp" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/reg_window_name"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:gravity="center"
+        android:layout_below="@id/main_toolbar"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/registration_window"
+        android:textColor="@color/white"
+        android:textSize="25sp" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="3sp"
+        android:layout_below="@id/reg_window_name"
+        android:background="@color/blue" />
+
+    <EditText
+        android:id="@+id/edit_login"
+        android:layout_width="match_parent"
+        android:layout_height="70sp"
+        android:layout_below="@id/divider"
+        android:layout_marginHorizontal="45sp"
+        android:layout_marginTop="25sp"
+        android:background="@null"
+        android:hint="@string/login"
+        android:inputType="textPersonName"
+        android:textColorHint="@color/mid_grey"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/input_frame_1"
+        android:layout_width="match_parent"
+        android:layout_height="70sp"
+        android:layout_below="@id/divider"
+        android:layout_marginHorizontal="30sp"
+        android:layout_marginTop="25sp"
+        android:src="@drawable/input_frame"/>
+
+    <EditText
+        android:id="@+id/edit_password"
+        android:layout_width="match_parent"
+        android:layout_height="70sp"
+        android:layout_below="@id/edit_login"
+        android:layout_marginHorizontal="45sp"
+        android:layout_marginTop="25sp"
+        android:background="@null"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:textColorHint="@color/mid_grey"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/input_frame_2"
+        android:layout_width="match_parent"
+        android:layout_height="70sp"
+        android:layout_below="@id/edit_login"
+        android:layout_marginHorizontal="30sp"
+        android:layout_marginTop="25sp"
+        android:src="@drawable/input_frame"/>
+
+    <EditText
+        android:id="@+id/edit_repeat_password"
+        android:layout_width="match_parent"
+        android:layout_height="70sp"
+        android:layout_below="@id/edit_password"
+        android:layout_marginHorizontal="45sp"
+        android:layout_marginTop="25sp"
+        android:background="@null"
+        android:hint="@string/repeat_password"
+        android:inputType="textPassword"
+        android:textColorHint="@color/mid_grey"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/input_frame_3"
+        android:layout_width="match_parent"
+        android:layout_height="70sp"
+        android:layout_below="@id/edit_password"
+        android:layout_marginHorizontal="30sp"
+        android:layout_marginTop="25sp"
+        android:src="@drawable/input_frame"/>
+
+    <RadioGroup
+        android:id="@+id/role_choice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/edit_repeat_password"
+        android:layout_marginTop="30sp"
+        android:gravity="center">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/writer"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:layout_marginHorizontal="40sp"
+            android:buttonTint="@color/blue"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reader"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:layout_marginHorizontal="40sp"
+            android:buttonTint="@color/blue"/>
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/register_button"
+        android:layout_width="match_parent"
+        android:layout_height="60sp"
+        android:layout_above="@id/login_button"
+        android:layout_marginHorizontal="30sp"
+        android:fontFamily="sans-serif-black"
+        android:text="@string/register" />
+
+    <TextView
+        android:id="@+id/login_button"
+        android:onClick="onClick"
+        android:clickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_marginHorizontal="30sp"
+        android:layout_marginBottom="20sp"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/to_login"
+        android:textColor="@color/blue"
+        android:textSize="20sp"
+        android:background="@null"/>
+
+</RelativeLayout>

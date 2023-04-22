@@ -1,0 +1,71 @@
+<resources>
+    <string name="app_name">LittlePoem</string>
+    <string name="registration_window">Регистрация</string>
+    <string name="login_window">Вход в аккаунт</string>
+    <string name="login">Логин</string>
+    <string name="login_colon">Логин:</string>
+    <string name="password">Пароль</string>
+    <string name="repeat_password">Повторите пароль</string>
+    <string name="role">Роль</string>
+    <string name="writer">Поэт</string>
+    <string name="reader">Читатель</string>
+    <string name="register">Зарегистрироваться</string>
+    <string name="login_button">Войти</string>
+    <string name="to_login"><u>Уже есть аккаунт (войти)</u></string>
+    <string name="to_registration"><u>Зарегистрировать аккаунт</u></string>
+    <string name="error_empty_field">Все поля должны быть заполнены</string>
+    <string name="error_different_passwords">Введённые пароли не совпадают</string>
+    <string name="error_short_password">Длина пароля должна быть 5-30 символов</string>
+    <string name="error_wrong_login">Некорректный логин</string>
+    <string name="error_wrong_password">Пароль содержит недопустимые символы</string>
+    <string name="error_login_already_exists">Логин занят</string>
+    <string name="error_logging">Неверный логин или пароль</string>
+    <string name="search">Поиск</string>
+    <string name="fresh_poems">Новые</string>
+    <string name="mine">Мои</string>
+    <string name="add">Добавить</string>
+    <string name="home_button_title">Главная</string>
+    <string name="settings_button_title">Настройки</string>
+    <string name="info_button_title">О приложении</string>
+    <string name="logout_button_title">Выйти</string>
+    <string name="profile_button">Профиль</string>
+    <string name="about_app">О приложении</string>
+    <string name="creators_title">Авторы</string>
+    <string name="creators_text">Идея: Краев Максим\nРазработчик: Краев Максим\nДизайн: Краев Максим</string>
+    <string name="change_password"><u>Изменить пароль</u></string>
+    <string name="app_settings_title">Приложение</string>
+    <string name="notifications_settings_title">Push-уведомления</string>
+    <string name="user_agreement_title"><u>Соглашение пользователя</u></string>
+    <string name="save_settings">Сохранить изменения</string>
+    <string name="save">Сохранить</string>
+    <string name="cancel">Отмена</string>
+    <string name="current_password">Текущий пароль</string>
+    <string name="new_password">Новый пароль</string>
+    <string name="error_wrong_name">Некорректное имя</string>
+    <string name="error_wrong_current_password">Неверный текущий пароль</string>
+    <string name="change_password_success">Пароль успешно обновлён</string>
+    <string name="new_poem_page_title">Новое стихотворение</string>
+    <string name="poem_name_title">Название:</string>
+    <string name="poem_genre_title">Жанр:</string>
+    <string name="input_your_poem_text">Введите текст своего стихотворения\n\n\n\n\n\n\n\n\n\n</string>
+    <string-array name="poetry_genres">
+        <item>Ода</item>
+        <item>Гимн</item>
+        <item>Элегия</item>
+        <item>Сонет</item>
+        <item>Послание</item>
+        <item>Мадригал</item>
+        <item>Романс</item>
+        <item>Эпиграмма</item>
+        <item>Сатира</item>
+        <item>Пастораль</item>
+        <item>Стансы</item>
+        <item>Былина</item>
+        <item>Басня</item>
+        <item>Притча</item>
+        <item>Баллада</item>
+        <item>Дума</item>
+        <item>Поэма</item>
+        <item>Исповедь</item>
+    </string-array>
+</resources>

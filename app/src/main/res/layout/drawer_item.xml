@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginHorizontal="10sp"
+        android:layout_marginTop="5sp"
+        android:elevation="12sp"
+        app:cardCornerRadius="50sp"
+        android:foregroundGravity="center_horizontal">
+        <ImageView
+            android:id="@+id/icon1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_home_button"
+            />
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/icon2"
+        android:layout_width="40sp"
+        android:layout_height="40sp"
+        android:src="@drawable/ic_home_button"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginHorizontal="15sp"
+        android:layout_marginTop="5sp"
+        android:foregroundGravity="center_horizontal"
+        />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        android:textColor="@color/dark_blue"
+        android:text="Line 1"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_alignBottom="@id/title"
+        android:layout_toRightOf="@+id/icon2" />
+
+    <TextView android:id="@+id/subTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@color/dark_blue"
+        android:text="Line 2"
+        android:layout_toRightOf="@+id/icon2"
+        android:layout_below="@+id/title"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>
