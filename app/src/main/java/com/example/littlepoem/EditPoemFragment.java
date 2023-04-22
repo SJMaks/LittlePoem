@@ -2,19 +2,14 @@ package com.example.littlepoem;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.Spannable;
-import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
-import android.text.Spanned;
 import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,8 +19,6 @@ public class EditPoemFragment extends Fragment {
 
     private EditText editPoemText;
     private ImageView buttonBold, buttonItalic, buttonAlignLeft, buttonAlignCenter, buttonAlignRight;
-
-    private StyleSpan selectedBoldSpan;
 
     private void toggleBoldStyle() {
         // Get the selected text from EditText
@@ -136,8 +129,6 @@ public class EditPoemFragment extends Fragment {
         buttonAlignLeft = v.findViewById(R.id.align_left_button);
         buttonAlignCenter = v.findViewById(R.id.align_center_button);
         buttonAlignRight = v.findViewById(R.id.align_right_button);
-
-
 
         buttonBold.setOnClickListener(new View.OnClickListener() {
             @Override
