@@ -46,13 +46,13 @@ public class EditPoemFragment extends Fragment {
                 if (spanStart <= startSelection) {
                     text.setSpan(new StyleSpan(Typeface.BOLD), spanStart, startSelection, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }
+                else {
+                    text.setSpan(new StyleSpan(Typeface.BOLD), endSelection, spanEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                }
                 if (spanEnd >= endSelection) {
                     text.setSpan(new StyleSpan(Typeface.BOLD), endSelection, spanEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }
-                if (spanStart > startSelection) {
-                    text.setSpan(new StyleSpan(Typeface.BOLD), endSelection, spanEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                }
-                if (spanEnd < endSelection) {
+                else {
                     text.setSpan(new StyleSpan(Typeface.BOLD), spanStart, startSelection, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }
                 hasBold = true;
@@ -95,13 +95,13 @@ public class EditPoemFragment extends Fragment {
                 if (spanStart <= startSelection) {
                     text.setSpan(new StyleSpan(Typeface.ITALIC), spanStart, startSelection, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }
+                else {
+                    text.setSpan(new StyleSpan(Typeface.ITALIC), endSelection, spanEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                }
                 if (spanEnd >= endSelection) {
                     text.setSpan(new StyleSpan(Typeface.ITALIC), endSelection, spanEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }
-                if (spanStart > startSelection) {
-                    text.setSpan(new StyleSpan(Typeface.ITALIC), endSelection, spanEnd, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                }
-                if (spanEnd < endSelection) {
+                else {
                     text.setSpan(new StyleSpan(Typeface.ITALIC), spanStart, startSelection, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }
                 hasItalic = true;
