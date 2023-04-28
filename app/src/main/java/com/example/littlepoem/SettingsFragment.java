@@ -66,7 +66,7 @@ public class SettingsFragment extends Fragment {
         main_toast = Toast.makeText(getContext(), "", Toast.LENGTH_LONG);
 
         dbHelper = new DBHelper(getContext());
-        usersDB = new UsersDB(dbHelper);
+        usersDB = new UsersDB(dbHelper, getContext());
 
         setData();
 

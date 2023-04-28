@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     //Фрагменты
     private WriterMainFragment writer_main_fragment;
     private ReaderMainFragment reader_main_fragment;
+    private ModeratorMainFragment moderator_main_fragment;
     private AboutAppFragment about_app_fragment;
     private SettingsFragment settings_fragment;
     private EditPoemFragment edit_poem_fragment;
@@ -79,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
             //Инициализация переменных
             writer_main_fragment = new WriterMainFragment();
             reader_main_fragment = new ReaderMainFragment();
+            moderator_main_fragment = new ModeratorMainFragment();
             about_app_fragment = new AboutAppFragment();
             settings_fragment = new SettingsFragment();
             edit_poem_fragment = new EditPoemFragment();
@@ -87,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
             menu_button = findViewById(R.id.menu_button);
 
             dbHelper = new DBHelper(this);
-            usersDB = new UsersDB(dbHelper);
+            usersDB = new UsersDB(dbHelper, getApplicationContext());
 
             bundle = new Bundle();
 
@@ -99,9 +101,13 @@ public class MainActivity extends AppCompatActivity {
                 writer_main_fragment.setArguments(bundle);
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, writer_main_fragment).commit();
             }
-            else {
+            else  if (usersDB.role.equals(this.getResources().getString(R.string.reader))) {
                 reader_main_fragment.setArguments(bundle);
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, reader_main_fragment).commit();
+            }
+            else {
+                moderator_main_fragment.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, moderator_main_fragment).commit();
             }
 
             //Кнопка меню
@@ -124,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                         case (1): {
                             writer_main_fragment.setArguments(bundle);
                             reader_main_fragment.setArguments(bundle);
-                            getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, usersDB.role.equals(getResources().getString(R.string.writer))?writer_main_fragment:reader_main_fragment).commit();
+                            getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, usersDB.role.equals(getResources().getString(R.string.writer))?writer_main_fragment:usersDB.role.equals(getResources().getString(R.string.reader))?reader_main_fragment:moderator_main_fragment).commit();
                             mDrawerLayout.close();
                             break;
                         }
@@ -195,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
             case (0):
                 writer_main_fragment.setArguments(bundle);
                 reader_main_fragment.setArguments(bundle);
-                getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, usersDB.role.equals(getResources().getString(R.string.writer))?writer_main_fragment:reader_main_fragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, usersDB.role.equals(getResources().getString(R.string.writer))?writer_main_fragment:usersDB.role.equals(getResources().getString(R.string.reader))?reader_main_fragment:moderator_main_fragment).commit();
                 break;
             case (1):
                 settings_fragment.setArguments(bundle);

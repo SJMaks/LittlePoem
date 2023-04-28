@@ -58,7 +58,7 @@ public class RegistrationActivity extends AppCompatActivity {
         main_toast = Toast.makeText(this, "", Toast.LENGTH_LONG);
 
         dbHelper = new DBHelper(this);
-        usersDB = new UsersDB(dbHelper);
+        usersDB = new UsersDB(dbHelper, getApplicationContext());
 
         //Кнопка войти
         login_button.setOnClickListener(new View.OnClickListener() {

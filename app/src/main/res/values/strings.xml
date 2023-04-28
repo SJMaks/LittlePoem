@@ -69,4 +69,5 @@
         <item>Исповедь</item>
     </string-array>
     <string name="draft_saved">Черновик сохранён до перезапуска приложения</string>
+    <string name="need_moderation">В ожидании проверки</string>
 </resources>

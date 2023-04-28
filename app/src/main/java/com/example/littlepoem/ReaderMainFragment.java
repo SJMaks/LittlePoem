@@ -29,7 +29,7 @@ public class ReaderMainFragment extends Fragment {
         search_button = v.findViewById(R.id.search_button);
 
         dbHelper = new DBHelper(getContext());
-        usersDB = new UsersDB(dbHelper);
+        usersDB = new UsersDB(dbHelper, getContext());
 
         usersDB.GetDataByID(getArguments().getString("user_id"));
 

@@ -6,6 +6,7 @@ import static java.security.AccessController.getContext;
 
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -21,6 +22,8 @@ import java.sql.PreparedStatement;
 public class UsersDB {
 
     private SQLiteDatabase database;
+    private Context context;
+
     public String id;
     public  String login;
     public String password;
@@ -28,8 +31,9 @@ public class UsersDB {
     public String name;
     public Bitmap picture;
 
-    public UsersDB (DBHelper dbHelper) {
+    public UsersDB (DBHelper dbHelper, Context context) {
         this.database = dbHelper.getWritableDatabase();
+        this.context = context;
     }
 
     public boolean CreateNewUser (String buf_login, String buf_password, String buf_role, byte[] buf_picture) {
@@ -122,6 +126,17 @@ public class UsersDB {
         database.execSQL("drop table if exists " + DBHelper.TABLE_USERS);
         database.execSQL("create table " + DBHelper.TABLE_USERS + "(" + DBHelper.KEY_ID
                 + " integer primary key," + DBHelper.KEY_LOGIN + " text," + DBHelper.KEY_PASSWORD + " text," + DBHelper.KEY_NAME + " text," + DBHelper.KEY_ROLE + " text," + DBHelper.KEY_PROFILE_PICTURE + " blob)");
+
+        //Регистрация модератора
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(DBHelper.KEY_LOGIN, "moderator");
+        contentValues.put(DBHelper.KEY_PASSWORD, "7qx2De7uht");
+        contentValues.put(DBHelper.KEY_NAME, "Модератор");
+        contentValues.put(DBHelper.KEY_ROLE, "Модератор");
+        contentValues.put(DBHelper.KEY_PROFILE_PICTURE, drawableToByte(context.getResources().getDrawable(R.drawable.ic_profile_moderator)));
+
+        database.insert(DBHelper.TABLE_USERS, null, contentValues);
     }
 
     public byte[] drawableToByte (Drawable drawable) {
