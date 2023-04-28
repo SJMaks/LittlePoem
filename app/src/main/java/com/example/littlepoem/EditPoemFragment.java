@@ -8,8 +8,10 @@ import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +21,7 @@ public class EditPoemFragment extends Fragment {
 
     private EditText editPoemText;
     private ImageView buttonBold, buttonItalic, buttonAlignLeft, buttonAlignCenter, buttonAlignRight;
+    private Button buttonCancel, buttonSave;
 
     private void toggleBoldStyle() {
         // Get the selected text from EditText
@@ -129,6 +132,8 @@ public class EditPoemFragment extends Fragment {
         buttonAlignLeft = v.findViewById(R.id.align_left_button);
         buttonAlignCenter = v.findViewById(R.id.align_center_button);
         buttonAlignRight = v.findViewById(R.id.align_right_button);
+        buttonCancel = v.findViewById(R.id.cancel_button);
+        buttonSave = v.findViewById(R.id.save_button);
 
         buttonBold.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,6 +182,21 @@ public class EditPoemFragment extends Fragment {
                 buttonAlignLeft.setImageDrawable(getContext().getResources().getDrawable(R.drawable.ic_align_left_button));
                 buttonAlignCenter.setImageDrawable(getContext().getResources().getDrawable(R.drawable.ic_align_center_button));
                 buttonAlignRight.setImageDrawable(getContext().getResources().getDrawable(R.drawable.ic_align_right_button_pushed));
+            }
+        });
+
+        buttonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(), getContext().getResources().getString(R.string.draft_saved), Toast.LENGTH_LONG).show();
+                ((MainActivity)getActivity()).openFragment(0);
+            }
+        });
+
+        buttonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
 
