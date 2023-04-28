@@ -10,7 +10,9 @@ import android.text.Html;
 import android.text.Spanned;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class PoemsDB {
     private SQLiteDatabase database;
@@ -90,5 +92,60 @@ public class PoemsDB {
         else {
             return false;
         }
+    }
+
+    public List<Poem> selectUnpublishedPoems() {
+        String[] columns = { "id", "title", "text", "author", "genre", "rating", "publication_date", "publication_state" };
+        String selection = "publication_state = ?";
+        String[] selectionArgs = { "0" };
+        Cursor cursor = database.query("poems", columns, selection, selectionArgs, null, null, null);
+
+        List<Poem> poems = new ArrayList<>();
+
+        while (cursor.moveToNext()) {
+            int id_index = cursor.getColumnIndex(DBHelper.KEY_ID);
+            int title_index = cursor.getColumnIndex(DBHelper.KEY_TITLE);
+            int text_index = cursor.getColumnIndex(DBHelper.KEY_TEXT);
+            int author_index = cursor.getColumnIndex(DBHelper.KEY_AUTHOR);
+            int genre_index = cursor.getColumnIndex(DBHelper.KEY_GENRE);
+            int rating_index = cursor.getColumnIndex(DBHelper.KEY_RATING);
+            int publication_date_index = cursor.getColumnIndex(DBHelper.KEY_PUBLICATION_DATE);
+            int publication_state_index = cursor.getColumnIndex(DBHelper.KEY_PUBLICATION_STATE);
+
+            id = cursor.getString(id_index);
+            title = cursor.getString(title_index);
+            text = Html.fromHtml(cursor.getString(text_index));
+            author = cursor.getInt(author_index);
+            genre = cursor.getString(genre_index);
+            rating = cursor.getFloat(rating_index);
+            publication_date = cursor.getString(publication_date_index);
+            publication_state = cursor.getInt(publication_state_index);
+
+            Poem poem = new Poem(id, title, text, author, genre, rating, publication_date, publication_state);
+            poems.add(poem);
+        }
+
+        cursor.close();
+        return poems;
+    }
+
+    public void ClearDB() {
+        database.execSQL("drop table if exists " + DBHelper.TABLE_POEMS);
+        database.execSQL("create table " + DBHelper.TABLE_POEMS + "(" + DBHelper.KEY_ID
+                + " integer primary key," + DBHelper.KEY_TITLE + " text," + DBHelper.KEY_TEXT + " text," +
+                DBHelper.KEY_AUTHOR + " integer," + DBHelper.KEY_GENRE + " text," + DBHelper.KEY_RATING + " float," +
+                DBHelper.KEY_PUBLICATION_DATE + " date," + DBHelper.KEY_PUBLICATION_STATE + " integer)");
+
+        //Регистрация модератора
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(DBHelper.KEY_LOGIN, "moderator");
+        contentValues.put(DBHelper.KEY_PASSWORD, "7qx2De7uht");
+        contentValues.put(DBHelper.KEY_NAME, context.getResources().getString(R.string.moderator));
+        contentValues.put(DBHelper.KEY_ROLE, context.getResources().getString(R.string.moderator));
+        Converter converter = new Converter();
+        contentValues.put(DBHelper.KEY_PROFILE_PICTURE, converter.drawableToByte(context.getResources().getDrawable(R.drawable.ic_profile_moderator)));
+
+        database.insert(DBHelper.TABLE_USERS, null, contentValues);
     }
 }

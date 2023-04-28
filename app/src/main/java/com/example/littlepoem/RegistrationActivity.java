@@ -90,7 +90,8 @@ public class RegistrationActivity extends AppCompatActivity {
                 }
 
                 if (checkData(login, password, repeat_password, role)) {
-                    byte[] defalt_picture = usersDB.drawableToByte(getApplicationContext().getResources().getDrawable(R.drawable.ic_profile_empty));
+                    Converter converter = new Converter();
+                    byte[] defalt_picture = converter.drawableToByte(getApplicationContext().getResources().getDrawable(R.drawable.ic_profile_empty));
                     if(usersDB.CreateNewUser(login, password, role, defalt_picture)) {
                         Intent intent = new Intent(view.getContext(), MainActivity.class);
                         SharedPreferences preferences = getSharedPreferences("CurrentUser", MODE_PRIVATE);

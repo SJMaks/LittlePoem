@@ -79,8 +79,10 @@ public class SettingsFragment extends Fragment {
                     main_toast.show();
                 }
                 else {
+                    Converter converter = new Converter();
+
                     usersDB.SetName(edit_name_text.getText().toString());
-                    byte[] buf_picture = usersDB.drawableToByte(profile_picture.getDrawable());
+                    byte[] buf_picture = converter.drawableToByte(profile_picture.getDrawable());
                     usersDB.SetPicture(buf_picture);
                     ((MainActivity)getActivity()).updateMenu(usersDB.id);
                 }

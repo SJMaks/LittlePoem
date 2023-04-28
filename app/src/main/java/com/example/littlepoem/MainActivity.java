@@ -163,6 +163,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updateMenu(String id) {
+        Converter converter = new Converter();
+
         //Получение данных пользователя
         if (usersDB.GetDataByID(id)) {
             name_text = usersDB.name;
@@ -172,16 +174,16 @@ public class MainActivity extends AppCompatActivity {
         else {
             name_text = this.getResources().getString(R.string.login);
             role_text = this.getResources().getString(R.string.role);
-            profile_picture = usersDB.drawableToBitmap(getApplicationContext().getResources().getDrawable(R.drawable.ic_profile_empty));
+            profile_picture = converter.drawableToBitmap(getApplicationContext().getResources().getDrawable(R.drawable.ic_profile_empty));
         }
 
         //Элементы меню
         mNavItems.removeAll(mNavItems);
         mNavItems.add(new NavItem(name_text, role_text, profile_picture));
-        mNavItems.add(new NavItem(this.getResources().getString(R.string.home_button_title), "", usersDB.drawableToBitmap(getApplicationContext().getResources().getDrawable(R.drawable.ic_home_button))));
-        mNavItems.add(new NavItem(this.getResources().getString(R.string.settings_button_title), "", usersDB.drawableToBitmap(getApplicationContext().getResources().getDrawable(R.drawable.ic_settings_button))));
-        mNavItems.add(new NavItem(this.getResources().getString(R.string.info_button_title), "", usersDB.drawableToBitmap(getApplicationContext().getResources().getDrawable(R.drawable.ic_info_button))));
-        mNavItems.add(new NavItem(this.getResources().getString(R.string.logout_button_title), "", usersDB.drawableToBitmap(getApplicationContext().getResources().getDrawable(R.drawable.ic_logout_button))));
+        mNavItems.add(new NavItem(this.getResources().getString(R.string.home_button_title), "", converter.drawableToBitmap(getApplicationContext().getResources().getDrawable(R.drawable.ic_home_button))));
+        mNavItems.add(new NavItem(this.getResources().getString(R.string.settings_button_title), "", converter.drawableToBitmap(getApplicationContext().getResources().getDrawable(R.drawable.ic_settings_button))));
+        mNavItems.add(new NavItem(this.getResources().getString(R.string.info_button_title), "", converter.drawableToBitmap(getApplicationContext().getResources().getDrawable(R.drawable.ic_info_button))));
+        mNavItems.add(new NavItem(this.getResources().getString(R.string.logout_button_title), "", converter.drawableToBitmap(getApplicationContext().getResources().getDrawable(R.drawable.ic_logout_button))));
 
         //Инициализация меню
         mDrawerPane = (RelativeLayout) findViewById(R.id.menuView);
