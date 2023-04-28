@@ -1,22 +1,30 @@
 package com.example.littlepoem;
 
+import android.content.Context;
 import android.text.Spanned;
 
 public class Poem {
     private String id;
     private String title;
     private Spanned text;
-    private int author;
+    private String author;
     private String genre;
     private float rating;
     private String publicationDate;
     private int publicationState;
 
-    public Poem(String id, String title, Spanned text, int author, String genre, float rating, String publicationDate, int publicationState) {
+    private DBHelper dbHelper;
+    private UsersDB usersDB;
+
+    public Poem(Context context, String id, String title, Spanned text, int author, String genre, float rating, String publicationDate, int publicationState) {
+        dbHelper = new DBHelper(context);
+        usersDB = new UsersDB(dbHelper, context);
+
         this.id = id;
         this.title = title;
         this.text = text;
-        this.author = author;
+        usersDB.GetDataByID(Integer.toString(author));
+        this.author = usersDB.name;
         this.genre = genre;
         this.rating = rating;
         this.publicationDate = publicationDate;
@@ -35,7 +43,7 @@ public class Poem {
         return text;
     }
 
-    public int getAuthor() {
+    public String getAuthor() {
         return author;
     }
 

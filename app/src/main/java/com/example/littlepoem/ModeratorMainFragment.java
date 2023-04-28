@@ -6,18 +6,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import java.util.List;
+
 public class ModeratorMainFragment extends Fragment {
 
     private EditText edit_search_text;
     private ImageView filter_button, search_button;
+    private ListView unpublishedPoemsListView;
 
     private DBHelper dbHelper;
     private UsersDB usersDB;
+    private PoemsDB poemsDB;
 
     @Nullable
     @Override
@@ -27,11 +32,17 @@ public class ModeratorMainFragment extends Fragment {
         edit_search_text = v.findViewById(R.id.edit_search_text);
         filter_button = v.findViewById(R.id.filter_button);
         search_button = v.findViewById(R.id.search_button);
+        unpublishedPoemsListView = v.findViewById(R.id.unpublished_poems);
 
         dbHelper = new DBHelper(getContext());
         usersDB = new UsersDB(dbHelper, getContext());
+        poemsDB = new PoemsDB(dbHelper, getContext());
 
         usersDB.GetDataByID(getArguments().getString("user_id"));
+
+        List<Poem> unpublishedPoems = poemsDB.selectUnpublishedPoems();
+        PoemListAdapter adapter = new PoemListAdapter(getContext(), unpublishedPoems);
+        unpublishedPoemsListView.setAdapter(adapter);
 
         //Кнопка фильтра поиска
         filter_button.setOnClickListener(new View.OnClickListener() {

@@ -121,7 +121,7 @@ public class PoemsDB {
             publication_date = cursor.getString(publication_date_index);
             publication_state = cursor.getInt(publication_state_index);
 
-            Poem poem = new Poem(id, title, text, author, genre, rating, publication_date, publication_state);
+            Poem poem = new Poem(context.getApplicationContext(), id, title, text, author, genre, rating, publication_date, publication_state);
             poems.add(poem);
         }
 
@@ -135,17 +135,5 @@ public class PoemsDB {
                 + " integer primary key," + DBHelper.KEY_TITLE + " text," + DBHelper.KEY_TEXT + " text," +
                 DBHelper.KEY_AUTHOR + " integer," + DBHelper.KEY_GENRE + " text," + DBHelper.KEY_RATING + " float," +
                 DBHelper.KEY_PUBLICATION_DATE + " date," + DBHelper.KEY_PUBLICATION_STATE + " integer)");
-
-        //Регистрация модератора
-        ContentValues contentValues = new ContentValues();
-
-        contentValues.put(DBHelper.KEY_LOGIN, "moderator");
-        contentValues.put(DBHelper.KEY_PASSWORD, "7qx2De7uht");
-        contentValues.put(DBHelper.KEY_NAME, context.getResources().getString(R.string.moderator));
-        contentValues.put(DBHelper.KEY_ROLE, context.getResources().getString(R.string.moderator));
-        Converter converter = new Converter();
-        contentValues.put(DBHelper.KEY_PROFILE_PICTURE, converter.drawableToByte(context.getResources().getDrawable(R.drawable.ic_profile_moderator)));
-
-        database.insert(DBHelper.TABLE_USERS, null, contentValues);
     }
 }

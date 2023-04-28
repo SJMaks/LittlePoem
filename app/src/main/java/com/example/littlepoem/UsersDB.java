@@ -126,5 +126,17 @@ public class UsersDB {
         database.execSQL("drop table if exists " + DBHelper.TABLE_USERS);
         database.execSQL("create table " + DBHelper.TABLE_USERS + "(" + DBHelper.KEY_ID
                 + " integer primary key," + DBHelper.KEY_LOGIN + " text," + DBHelper.KEY_PASSWORD + " text," + DBHelper.KEY_NAME + " text," + DBHelper.KEY_ROLE + " text," + DBHelper.KEY_PROFILE_PICTURE + " blob)");
+
+        //Регистрация модератора
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(DBHelper.KEY_LOGIN, "moderator");
+        contentValues.put(DBHelper.KEY_PASSWORD, "7qx2De7uht");
+        contentValues.put(DBHelper.KEY_NAME, context.getResources().getString(R.string.moderator));
+        contentValues.put(DBHelper.KEY_ROLE, context.getResources().getString(R.string.moderator));
+        Converter converter = new Converter();
+        contentValues.put(DBHelper.KEY_PROFILE_PICTURE, converter.drawableToByte(context.getResources().getDrawable(R.drawable.ic_profile_moderator)));
+
+        database.insert(DBHelper.TABLE_USERS, null, contentValues);
     }
 }
