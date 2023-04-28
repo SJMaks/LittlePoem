@@ -1,16 +1,24 @@
 package com.example.littlepoem;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Scroller;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,9 +27,16 @@ import androidx.fragment.app.Fragment;
 
 public class EditPoemFragment extends Fragment {
 
-    private EditText editPoemText;
+    private EditText editPoemText, editPoemTitleText;
     private ImageView buttonBold, buttonItalic, buttonAlignLeft, buttonAlignCenter, buttonAlignRight;
     private Button buttonCancel, buttonSave;
+    private Spinner genreSpinner;
+    private String genre;
+
+    private DBHelper dbHelper;
+    private PoemsDB poemsDB;
+
+    private Toast main_toast;
 
     private void toggleBoldStyle() {
         // Get the selected text from EditText
@@ -126,6 +141,7 @@ public class EditPoemFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_edit_poem, container, false);
 
+        editPoemTitleText = v.findViewById(R.id.poem_title_edit_text);
         editPoemText = v.findViewById(R.id.poem_edit_text);
         buttonBold = v.findViewById(R.id.bold_button);
         buttonItalic = v.findViewById(R.id.italic_button);
@@ -134,6 +150,12 @@ public class EditPoemFragment extends Fragment {
         buttonAlignRight = v.findViewById(R.id.align_right_button);
         buttonCancel = v.findViewById(R.id.cancel_button);
         buttonSave = v.findViewById(R.id.save_button);
+        genreSpinner = v.findViewById(R.id.genre_spinner);
+
+        dbHelper = new DBHelper(getContext());
+        poemsDB = new PoemsDB(dbHelper, getContext());
+
+        main_toast = Toast.makeText(getContext(), "", Toast.LENGTH_LONG);
 
         buttonBold.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,7 +210,9 @@ public class EditPoemFragment extends Fragment {
         buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), getContext().getResources().getString(R.string.draft_saved), Toast.LENGTH_LONG).show();
+                main_toast.setText(getContext().getResources().getString(R.string.draft_saved));
+                main_toast.cancel();
+                main_toast.show();
                 ((MainActivity)getActivity()).openFragment(0);
             }
         });
@@ -196,7 +220,23 @@ public class EditPoemFragment extends Fragment {
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String title = editPoemTitleText.getText().toString().trim();
+                Spannable text = editPoemText.getText();
+                int author = ((MainActivity)getActivity()).getCurrentUser();
 
+                if (title.isEmpty() || text.toString().isEmpty()) {
+                    main_toast.setText(R.string.error_empty_field);
+                    main_toast.cancel();
+                    main_toast.show();
+                }
+                else {
+                    if(poemsDB.CreateNewPoem(title, text, author, genre)) {
+                        main_toast.setText(getContext().getResources().getString(R.string.successfully_sent_on_moderation));
+                        main_toast.cancel();
+                        main_toast.show();
+                        ((MainActivity)getActivity()).openFragment(0);
+                    }
+                }
             }
         });
 
@@ -227,6 +267,19 @@ public class EditPoemFragment extends Fragment {
                 else {
 
                 }
+            }
+        });
+
+        genreSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                genre = parent.getItemAtPosition(position).toString();
+                // Do something with the selected string
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Do nothing
             }
         });
 

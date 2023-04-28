@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
 
     //Бандл
     Bundle bundle;
-    String current_id;
 
     //Фрагменты
     private WriterMainFragment writer_main_fragment;
@@ -66,11 +65,8 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         getSupportActionBar().setTitle(null);
 
-        SharedPreferences preferences = getSharedPreferences("CurrentUser", MODE_PRIVATE);
-        current_id = preferences.getString("current_user_id", "");
-
         //Проверка id текущего пользователя
-        if (current_id.equals("")) {
+        if (Integer.toString(getCurrentUser()).equals("")) {
             Intent intent = new Intent(this, RegistrationActivity.class);
             startActivity(intent);
             overridePendingTransition(0, 0);
@@ -93,8 +89,8 @@ public class MainActivity extends AppCompatActivity {
 
             bundle = new Bundle();
 
-            bundle.putString("user_id", current_id);
-            updateMenu(current_id);
+            bundle.putString("user_id", Integer.toString(getCurrentUser()));
+            updateMenu(Integer.toString(getCurrentUser()));
 
             //Инициализация основного фрагмента
             if (usersDB.role.equals(this.getResources().getString(R.string.writer))) {
@@ -147,9 +143,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         case (4): {
                             usersDB.id = null;
-                            SharedPreferences.Editor editor = preferences.edit();
-                            editor.putString("current_user_id", "");
-                            editor.apply();
+                            resetCurrentUser();
                             Intent intent = new Intent(view.getContext(), LoginActivity.class);
                             startActivity(intent);
                             overridePendingTransition(0, 0);
@@ -221,5 +215,12 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("current_user_id", "");
         editor.apply();
+    }
+
+    public int getCurrentUser() {
+        SharedPreferences preferences = getSharedPreferences("CurrentUser", MODE_PRIVATE);
+        String current_id = preferences.getString("current_user_id", "");
+
+        return Integer.valueOf(current_id);
     }
 }

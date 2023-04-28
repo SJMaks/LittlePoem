@@ -70,4 +70,5 @@
     </string-array>
     <string name="draft_saved">Черновик сохранён до перезапуска приложения</string>
     <string name="need_moderation">В ожидании проверки</string>
+    <string name="successfully_sent_on_moderation">Стихотворение успешно отправлено на модерацию</string>
 </resources>
