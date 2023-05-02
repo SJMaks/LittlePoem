@@ -2,7 +2,9 @@ package com.example.littlepoem;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.text.Spannable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,6 +73,35 @@ public class SettingsFragment extends Fragment {
 
         setData();
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage(getContext().getResources().getString(R.string.confirm_change_settings));
+        builder.setPositiveButton(getContext().getResources().getString(R.string.yes_button), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                Converter converter = new Converter();
+
+                usersDB.SetName(edit_name_text.getText().toString());
+                byte[] buf_picture = converter.drawableToByte(profile_picture.getDrawable());
+                usersDB.SetPicture(buf_picture);
+                ((MainActivity)getActivity()).updateMenu(usersDB.id);
+
+                if(checkChangePassword(edit_current_password.getText().toString(),
+                        edit_new_password.getText().toString(),
+                        edit_repeat_new_password.getText().toString())) {
+                    usersDB.SetPassword(edit_repeat_new_password.getText().toString());
+                }
+
+                main_toast.setText(R.string.change_settings_success);
+                main_toast.cancel();
+                main_toast.show();
+            }
+        });
+        builder.setNegativeButton(getContext().getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog dialog = builder.create();
+
         save_button_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,21 +110,15 @@ public class SettingsFragment extends Fragment {
                     main_toast.cancel();
                     main_toast.show();
                 }
-                else {
-                    Converter converter = new Converter();
-
-                    usersDB.SetName(edit_name_text.getText().toString());
-                    byte[] buf_picture = converter.drawableToByte(profile_picture.getDrawable());
-                    usersDB.SetPicture(buf_picture);
-                    ((MainActivity)getActivity()).updateMenu(usersDB.id);
+                else if (edit_current_password.getText().toString().equals("") &&
+                        edit_new_password.getText().toString().equals("") &&
+                        edit_repeat_new_password.getText().toString().equals("")) {
+                    dialog.show();
                 }
-                if(checkChangePassword(edit_current_password.getText().toString(),
+                else if (checkChangePassword(edit_current_password.getText().toString(),
                         edit_new_password.getText().toString(),
                         edit_repeat_new_password.getText().toString())) {
-                    usersDB.SetPassword(edit_repeat_new_password.getText().toString());
-                    main_toast.setText(R.string.change_password_success);
-                    main_toast.cancel();
-                    main_toast.show();
+                    dialog.show();
                 }
             }
         });

@@ -43,7 +43,7 @@
     <string name="new_password">Новый пароль</string>
     <string name="error_wrong_name">Некорректное имя</string>
     <string name="error_wrong_current_password">Неверный текущий пароль</string>
-    <string name="change_password_success">Пароль успешно обновлён</string>
+    <string name="change_settings_success">Данные успешно обновлены</string>
     <string name="new_poem_page_title">Новое стихотворение</string>
     <string name="poem_name_title">Название:</string>
     <string name="poem_genre_title">Жанр:</string>
@@ -72,4 +72,7 @@
     <string name="need_moderation">В ожидании проверки</string>
     <string name="successfully_sent_on_moderation">Стихотворение успешно отправлено на модерацию</string>
     <string name="moderator">Модератор</string>
+    <string name="confirm_send_poem_to_moderation">Вы уверены, что хотите отправить стихотворение на модерацию?</string>
+    <string name="confirm_change_settings">Вы уверены, что хотите изменить данные профиля?</string>
+    <string name="yes_button">Да</string>
 </resources>

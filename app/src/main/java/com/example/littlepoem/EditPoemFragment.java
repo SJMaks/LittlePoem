@@ -2,6 +2,9 @@ package com.example.littlepoem;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -157,6 +160,29 @@ public class EditPoemFragment extends Fragment {
 
         main_toast = Toast.makeText(getContext(), "", Toast.LENGTH_LONG);
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage(getContext().getResources().getString(R.string.confirm_send_poem_to_moderation));
+        builder.setPositiveButton(getContext().getResources().getString(R.string.yes_button), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                String title = editPoemTitleText.getText().toString().trim();
+                Spannable text = editPoemText.getText();
+                int author = ((MainActivity)getActivity()).getCurrentUser();
+
+                if(poemsDB.CreateNewPoem(title, text, author, genre)) {
+                    main_toast.setText(getContext().getResources().getString(R.string.successfully_sent_on_moderation));
+                    main_toast.cancel();
+                    main_toast.show();
+                    ((MainActivity)getActivity()).openFragment(0);
+                }
+            }
+        });
+        builder.setNegativeButton(getContext().getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog dialog = builder.create();
+
         buttonBold.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -222,7 +248,6 @@ public class EditPoemFragment extends Fragment {
             public void onClick(View view) {
                 String title = editPoemTitleText.getText().toString().trim();
                 Spannable text = editPoemText.getText();
-                int author = ((MainActivity)getActivity()).getCurrentUser();
 
                 if (title.isEmpty() || text.toString().isEmpty()) {
                     main_toast.setText(R.string.error_empty_field);
@@ -230,17 +255,13 @@ public class EditPoemFragment extends Fragment {
                     main_toast.show();
                 }
                 else {
-                    if(poemsDB.CreateNewPoem(title, text, author, genre)) {
-                        main_toast.setText(getContext().getResources().getString(R.string.successfully_sent_on_moderation));
-                        main_toast.cancel();
-                        main_toast.show();
-                        ((MainActivity)getActivity()).openFragment(0);
-                    }
+                    dialog.show();
                 }
             }
         });
 
         editPoemText.setAccessibilityDelegate(new View.AccessibilityDelegate() {
+            @SuppressLint("UseCompatLoadingForDrawables")
             @Override public void sendAccessibilityEvent(View host, int eventType) {
                 super.sendAccessibilityEvent(host, eventType);
                 if (eventType == android.view.accessibility.AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED) {
@@ -274,12 +295,10 @@ public class EditPoemFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 genre = parent.getItemAtPosition(position).toString();
-                // Do something with the selected string
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                // Do nothing
             }
         });
 
