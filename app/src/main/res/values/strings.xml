@@ -45,8 +45,19 @@
     <string name="error_wrong_current_password">Неверный текущий пароль</string>
     <string name="change_settings_success">Данные успешно обновлены</string>
     <string name="new_poem_page_title">Новое стихотворение</string>
-    <string name="poem_name_title">Название:</string>
-    <string name="poem_genre_title">Жанр:</string>
+    <string name="poem_name_title_colon">Название:</string>
+    <string name="poem_genre_title_colon">Жанр:</string>
+    <string name="poem_rating_title_colon">Рейтинг:</string>
+    <string name="poem_date_title_colon">Дата публикации:</string>
+    <string name="poem_name_title">Название</string>
+    <string name="poem_author_title">Автор</string>
+    <string name="poem_genre_title">Жанр</string>
+    <string name="poem_description_title">Описание</string>
+    <string name="poem">Стихотворение</string>
+    <string name="poems">Стихотворения</string>
+    <string name="review">Отзыв</string>
+    <string name="reviews">Отзывы</string>
+    <string name="reviews_underline"><u>Отзывы</u></string>
     <string name="input_your_poem_text">Введите текст своего стихотворения\n\n\n\n\n\n\n\n\n\n</string>
     <string-array name="poetry_genres">
         <item>Ода</item>

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -43,6 +44,15 @@ public class ModeratorMainFragment extends Fragment {
         List<Poem> unpublishedPoems = poemsDB.selectUnpublishedPoems();
         PoemListAdapter adapter = new PoemListAdapter(getContext(), unpublishedPoems);
         unpublishedPoemsListView.setAdapter(adapter);
+
+        //Нажатие на стихотворение
+        unpublishedPoemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Poem clickedPoem = (Poem) parent.getItemAtPosition(position);
+                ((MainActivity)getActivity()).openReadPoemFragment(clickedPoem);
+            }
+        });
 
         //Кнопка фильтра поиска
         filter_button.setOnClickListener(new View.OnClickListener() {

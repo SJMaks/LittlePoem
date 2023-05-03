@@ -3,7 +3,9 @@ package com.example.littlepoem;
 import android.content.Context;
 import android.text.Spanned;
 
-public class Poem {
+import java.io.Serializable;
+
+public class Poem implements Serializable {
     private String id;
     private String title;
     private Spanned text;

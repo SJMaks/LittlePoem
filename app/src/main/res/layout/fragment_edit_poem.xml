@@ -101,7 +101,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15sp"
                 android:layout_marginStart="15sp"
-                android:text="@string/poem_name_title"
+                android:text="@string/poem_name_title_colon"
                 android:fontFamily="sans-serif-medium"
                 android:textColor="@color/white"
                 android:textSize="25sp" />
@@ -126,7 +126,7 @@
                 android:layout_below="@id/poem_name_title"
                 android:layout_marginTop="10sp"
                 android:layout_marginStart="15sp"
-                android:text="@string/poem_genre_title"
+                android:text="@string/poem_genre_title_colon"
                 android:fontFamily="sans-serif-medium"
                 android:textColor="@color/white"
                 android:textSize="25sp" />

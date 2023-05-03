@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private AboutAppFragment about_app_fragment;
     private SettingsFragment settings_fragment;
     private EditPoemFragment edit_poem_fragment;
+    private ReadPoemFragment read_poem_fragment;
 
     //Меню
     private ListView mDrawerList;
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
             about_app_fragment = new AboutAppFragment();
             settings_fragment = new SettingsFragment();
             edit_poem_fragment = new EditPoemFragment();
+            read_poem_fragment = new ReadPoemFragment();
 
             mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
             menu_button = findViewById(R.id.menu_button);
@@ -212,6 +214,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void openReadPoemFragment(Poem poem) {
+        bundle.putSerializable("poem", poem);
+        read_poem_fragment.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, read_poem_fragment).commit();
+    }
+
     public void resetCurrentUser() {
         SharedPreferences preferences = getSharedPreferences("CurrentUser", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
@@ -224,5 +232,10 @@ public class MainActivity extends AppCompatActivity {
         String current_id = preferences.getString("current_user_id", "");
 
         return Integer.valueOf(current_id);
+    }
+
+    @Override
+    public void onBackPressed() {
+        openFragment(0);
     }
 }
