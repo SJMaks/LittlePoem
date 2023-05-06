@@ -98,4 +98,6 @@
     <string name="yes_button">Да</string>
     <string name="moderate_title">Проверка</string>
     <string name="poem_has_been_rejected">Отклонено</string>
+    <string name="published">Опубликованные</string>
+    <string name="rejected">Отклонённые</string>
 </resources>

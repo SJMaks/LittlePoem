@@ -46,9 +46,9 @@ public class WriterMainFragment extends Fragment {
         usersDB = new UsersDB(dbHelper, getContext());
         poemsDB = new PoemsDB(dbHelper, getContext());
 
-        usersDB.GetDataByID(getArguments().getString("user_id"));
+        usersDB.GetDataByID(((MainActivity)getActivity()).getCurrentUser());
 
-        List<Poem> myPoems = poemsDB.selectMyPoems(((MainActivity)getActivity()).getCurrentUser());
+        List<Poem> myPoems = poemsDB.selectUsersPoems(((MainActivity)getActivity()).getCurrentUser());
         PoemListAdapter adapterMyPoems = new PoemListAdapter(getContext(), myPoems);
         myPoemsListView.setAdapter(adapterMyPoems);
 
@@ -61,14 +61,14 @@ public class WriterMainFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Poem clickedPoem = (Poem) parent.getItemAtPosition(position);
-                ((MainActivity)getActivity()).openReadPoemFragment(clickedPoem);
+                ((MainActivity)getActivity()).openReadPoemFragment(clickedPoem, new ReadPoemFragment());
             }
         });
         newPoemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Poem clickedPoem = (Poem) parent.getItemAtPosition(position);
-                ((MainActivity)getActivity()).openReadPoemFragment(clickedPoem);
+                ((MainActivity)getActivity()).openReadPoemFragment(clickedPoem, new ReadPoemFragment());
             }
         });
 

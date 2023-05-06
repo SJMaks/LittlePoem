@@ -39,7 +39,7 @@ public class ModeratorMainFragment extends Fragment {
         usersDB = new UsersDB(dbHelper, getContext());
         poemsDB = new PoemsDB(dbHelper, getContext());
 
-        usersDB.GetDataByID(getArguments().getString("user_id"));
+        usersDB.GetDataByID(((MainActivity)getActivity()).getCurrentUser());
 
         List<Poem> unpublishedPoems = poemsDB.selectUnpublishedPoems();
         PoemListAdapter adapter = new PoemListAdapter(getContext(), unpublishedPoems);
@@ -50,7 +50,7 @@ public class ModeratorMainFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Poem clickedPoem = (Poem) parent.getItemAtPosition(position);
-                ((MainActivity)getActivity()).openModeratePoemFragment(clickedPoem);
+                ((MainActivity)getActivity()).openReadPoemFragment(clickedPoem, new ModeratePoemFragment());
             }
         });
 

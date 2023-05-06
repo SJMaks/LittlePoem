@@ -134,7 +134,7 @@ public class SettingsFragment extends Fragment {
     }
 
     private void setData() {
-        if (usersDB.GetDataByID(getArguments().getString("user_id"))) {
+        if (usersDB.GetDataByID(((MainActivity)getActivity()).getCurrentUser())) {
             login_text.setText(usersDB.login);
             edit_name_text.setText(usersDB.name);
             role_text.setText(usersDB.role);

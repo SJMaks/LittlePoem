@@ -54,7 +54,7 @@
         android:layout_toStartOf="@id/settings_button"
         android:layout_alignBottom="@id/profile_cardView"
         android:gravity="center"
-        android:text="@string/role"
+        android:text="@string/moderator"
         android:fontFamily="sans-serif-medium"
         android:textColor="@color/grey"
         android:textSize="22sp" />
@@ -79,18 +79,29 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/poems_textView"
+                android:layout_width="match_parent"
+                android:layout_height="40sp"
+                android:gravity="center"
+                android:layout_marginTop="10sp"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/poems"
+                android:textColor="@color/white"
+                android:textSize="25sp" />
+
+            <TextView
                 android:id="@+id/my_poems_textView"
                 android:layout_width="match_parent"
                 android:layout_height="50sp"
                 android:gravity="center"
                 android:layout_marginTop="10sp"
                 android:fontFamily="sans-serif-medium"
-                android:text="@string/my_poems"
+                android:text="@string/published"
                 android:textColor="@color/white"
                 android:textSize="25sp" />
 
             <com.example.littlepoem.WrapContentListView
-                android:id="@+id/my_poems"
+                android:id="@+id/published_poems"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10sp"
@@ -103,12 +114,12 @@
                 android:gravity="center"
                 android:layout_marginTop="10sp"
                 android:fontFamily="sans-serif-medium"
-                android:text="@string/favourite_poems"
+                android:text="@string/rejected"
                 android:textColor="@color/white"
                 android:textSize="25sp" />
 
             <com.example.littlepoem.WrapContentListView
-                android:id="@+id/favourite_poems"
+                android:id="@+id/rejected_poems"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10sp"

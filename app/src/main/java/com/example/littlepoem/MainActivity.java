@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     Bundle bundle;
 
     //Фрагменты
-    private Fragment mainFragment, about_app_fragment, settings_fragment, read_poem_fragment, moderate_poem_fragment;
+    private Fragment main_fragment, about_app_fragment, settings_fragment, read_poem_fragment, profile_fragment;
 
     //Меню
     private ListView mDrawerList;
@@ -68,18 +68,18 @@ public class MainActivity extends AppCompatActivity {
 
             bundle = new Bundle();
 
-            mainFragment = getCurrentMainFragment();
+            main_fragment = getCurrentMainFragment();
             about_app_fragment = new AboutAppFragment();
             settings_fragment = new SettingsFragment();
             read_poem_fragment = new ReadPoemFragment();
-            moderate_poem_fragment = new ModeratePoemFragment();
+            profile_fragment = getCurrentProfileFragment();
 
             bundle.putString("user_id", getCurrentUser());
             updateMenu(getCurrentUser());
 
             //Инициализация основного фрагмента
-            mainFragment.setArguments(bundle);
-            getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, mainFragment).commit();
+            main_fragment.setArguments(bundle);
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, main_fragment).commit();
 
             //Кнопка меню
             menu_button.setOnClickListener(new View.OnClickListener() {
@@ -95,17 +95,16 @@ public class MainActivity extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     switch (position) {
                         case (0): {
+                            getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, profile_fragment).commit();
                             mDrawerLayout.close();
                             break;
                         }
                         case (1): {
-                            mainFragment.setArguments(bundle);
-                            getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, mainFragment).commit();
+                            getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, main_fragment).commit();
                             mDrawerLayout.close();
                             break;
                         }
                         case (2): {
-                            settings_fragment.setArguments(bundle);
                             getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, settings_fragment).commit();
                             mDrawerLayout.close();
                             break;
@@ -171,16 +170,10 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, fragment).commit();
     }
 
-    public void openReadPoemFragment(Poem poem) {
+    public void openReadPoemFragment(Poem poem, Fragment read_fragment) {
         bundle.putSerializable("poem", poem);
-        read_poem_fragment.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, read_poem_fragment).commit();
-    }
-
-    public void openModeratePoemFragment(Poem poem) {
-        bundle.putSerializable("poem", poem);
-        moderate_poem_fragment.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, moderate_poem_fragment).commit();
+        read_fragment.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, read_fragment).commit();
     }
 
     public void resetCurrentUser() {
@@ -208,6 +201,23 @@ public class MainActivity extends AppCompatActivity {
             }
 
             return new ModeratorMainFragment();
+        }
+        else {
+            return new ErrorMainFragment();
+        }
+    }
+
+    public Fragment getCurrentProfileFragment() {
+        if(usersDB.GetDataByID(getCurrentUser())) {
+            if (usersDB.role.equals(this.getResources().getString(R.string.writer))) {
+                return new WriterProfileFragment();
+            }
+
+            if (usersDB.role.equals(this.getResources().getString(R.string.reader))) {
+                return new ReaderProfileFragment();
+            }
+
+            return new ModeratorProfileFragment();
         }
         else {
             return new ErrorMainFragment();

@@ -39,7 +39,7 @@ public class ReaderMainFragment extends Fragment {
         usersDB = new UsersDB(dbHelper, getContext());
         poemsDB = new PoemsDB(dbHelper, getContext());
 
-        usersDB.GetDataByID(getArguments().getString("user_id"));
+        usersDB.GetDataByID(((MainActivity)getActivity()).getCurrentUser());
 
         List<Poem> newPoems = poemsDB.selectNewPoems();
         PoemListAdapter adapterNewPoems = new PoemListAdapter(getContext(), newPoems);
@@ -50,7 +50,7 @@ public class ReaderMainFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Poem clickedPoem = (Poem) parent.getItemAtPosition(position);
-                ((MainActivity)getActivity()).openReadPoemFragment(clickedPoem);
+                ((MainActivity)getActivity()).openReadPoemFragment(clickedPoem, new ReadPoemFragment());
             }
         });
 

@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 public class ModeratePoemFragment extends Fragment {
     private TextView poemTitle, poemAuthor, poemGenre, poemText;
     private Button publishButton, rejectButton;
+    private LinearLayout buttons;
 
     Poem poem;
 
@@ -38,6 +39,7 @@ public class ModeratePoemFragment extends Fragment {
         poemAuthor = v.findViewById(R.id.poem_author);
         poemGenre = v.findViewById(R.id.poem_genre);
         poemText = v.findViewById(R.id.poem_text);
+        buttons = v.findViewById(R.id.buttons);
         publishButton = v.findViewById(R.id.publish_button);
         rejectButton = v.findViewById(R.id.reject_button);
 
@@ -105,6 +107,11 @@ public class ModeratePoemFragment extends Fragment {
     private void setData() {
         Bundle bundle = getArguments();
         poem = (Poem) bundle.getSerializable("poem");
+
+        buttons.setVisibility(View.GONE);
+        if (poem.getPublicationState() == 0 || poem.getPublicationState() == 3) {
+            buttons.setVisibility(View.VISIBLE);
+        }
 
         poemTitle.setText(poem.getTitle());
         poemAuthor.setText(poem.getAuthor());
