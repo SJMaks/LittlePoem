@@ -30,7 +30,7 @@ public class Poem implements Serializable {
         this.text = text;
         this.text_alignment = text_alignment;
         this.author_id = Integer.toString(author);
-        usersDB.GetDataByID(Integer.toString(author));
+        usersDB.getDataByID(Integer.toString(author));
         this.author = usersDB.name;
         this.genre = genre;
         this.rating = rating;

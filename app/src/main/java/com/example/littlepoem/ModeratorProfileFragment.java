@@ -78,7 +78,7 @@ public class ModeratorProfileFragment extends Fragment {
     }
 
     private void setData() {
-        usersDB.GetDataByID(((MainActivity)getActivity()).getCurrentUser());
+        usersDB.getDataByID(((MainActivity)getActivity()).getCurrentUser());
 
         name.setText(usersDB.name);
         profile_picture.setImageBitmap(usersDB.picture);

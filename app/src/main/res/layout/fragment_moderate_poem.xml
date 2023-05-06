@@ -193,6 +193,7 @@
             android:layout_height="60sp"
             android:layout_weight="1"
             android:fontFamily="sans-serif-black"
+            android:textSize="12sp"
             android:text="@string/publish" />
 
         <Button
@@ -204,6 +205,7 @@
             android:backgroundTint="@color/grey"
             android:textColor="@color/dark_grey"
             android:fontFamily="sans-serif-black"
+            android:textSize="12sp"
             android:text="@string/reject" />
 
     </LinearLayout>

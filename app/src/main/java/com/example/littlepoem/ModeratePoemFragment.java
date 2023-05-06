@@ -59,7 +59,7 @@ public class ModeratePoemFragment extends Fragment {
                 builder.setMessage(getContext().getResources().getString(R.string.confirm_publish_poem));
                 builder.setPositiveButton(getContext().getResources().getString(R.string.yes_button), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        poemsDB.PublishPoem(poem.getId(), ((MainActivity)getActivity()).getCurrentUser());
+                        poemsDB.publishPoem(poem.getId(), ((MainActivity)getActivity()).getCurrentUser());
                         main_toast.setText(getContext().getResources().getString(R.string.successfully_published_poem));
                         main_toast.cancel();
                         main_toast.show();
@@ -84,7 +84,7 @@ public class ModeratePoemFragment extends Fragment {
                 builder.setMessage(getContext().getResources().getString(R.string.confirm_reject_poem));
                 builder.setPositiveButton(getContext().getResources().getString(R.string.yes_button), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        poemsDB.RejectPoem(poem.getId(), ((MainActivity)getActivity()).getCurrentUser());
+                        poemsDB.rejectPoem(poem.getId(), ((MainActivity)getActivity()).getCurrentUser());
                         main_toast.setText(getContext().getResources().getString(R.string.successfully_rejected_poem));
                         main_toast.cancel();
                         main_toast.show();

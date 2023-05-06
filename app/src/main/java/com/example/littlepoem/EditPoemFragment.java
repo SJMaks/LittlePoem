@@ -170,7 +170,7 @@ public class EditPoemFragment extends Fragment {
                 Spannable text = editPoemText.getText();
                 String author = ((MainActivity)getActivity()).getCurrentUser();
 
-                if(poemsDB.CreateNewPoem(title, text, text_alignment, author, genre)) {
+                if(poemsDB.createNewPoem(title, text, text_alignment, author, genre)) {
                     main_toast.setText(getContext().getResources().getString(R.string.successfully_sent_on_moderation_poem));
                     main_toast.cancel();
                     main_toast.show();

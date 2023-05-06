@@ -23,7 +23,7 @@
     <string name="search">Поиск</string>
     <string name="new_poems">Новые</string>
     <string name="my_poems">Мои стихотворения</string>
-    <string name="favourite_poems">Избранные</string>
+    <string name="liked_poems">Избранные</string>
     <string name="add">Добавить</string>
     <string name="home_button_title">Главная</string>
     <string name="settings_button_title">Настройки</string>
@@ -100,4 +100,7 @@
     <string name="poem_has_been_rejected">Отклонено</string>
     <string name="published">Опубликованные</string>
     <string name="rejected">Отклонённые</string>
+    <string name="successfully_liked">Стихотворение добавлено в избранные</string>
+    <string name="successfully_unliked">Стихотворение удалено из избранных</string>
+    <string name="successfully_copied">Текст стихотворения скопирован</string>
 </resources>

@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
                 String login = edit_login.getText().toString().trim();
                 String password = edit_password.getText().toString();
 
-                if (usersDB.GetDataByLoginPassword(login, password)) {
+                if (usersDB.getDataByLoginPassword(login, password)) {
                     SharedPreferences preferences = getSharedPreferences("CurrentUser", MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString("current_user_id", usersDB.id);

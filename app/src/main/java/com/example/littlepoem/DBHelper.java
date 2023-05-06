@@ -19,6 +19,7 @@ public class DBHelper extends SQLiteOpenHelper{
     public static final String KEY_NAME = "name";
     public static final String KEY_ROLE = "role";
     public static final String KEY_PROFILE_PICTURE = "profile_picture";
+    public static final String KEY_LIKED_POEMS = "liked_poems";
 
     //Таблица стихотворений
     public static final String TABLE_POEMS = "poems";
@@ -41,7 +42,7 @@ public class DBHelper extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table " + TABLE_USERS + "(" + KEY_ID
                 + " integer primary key," + KEY_LOGIN + " text," + KEY_PASSWORD + " text," +
-                KEY_NAME + " text," + KEY_ROLE + " text," + KEY_PROFILE_PICTURE + " blob)");
+                KEY_NAME + " text," + KEY_ROLE + " text," + KEY_PROFILE_PICTURE + " blob," + KEY_LIKED_POEMS + " text)");
         db.execSQL("create table " + TABLE_POEMS + "(" + KEY_ID
                 + " integer primary key," + KEY_TITLE + " text," + KEY_TEXT + " text," +
                 KEY_TEXT_ALIGNMENT + " integer," + KEY_AUTHOR + " integer," + KEY_GENRE + " text," + KEY_RATING + " float," +

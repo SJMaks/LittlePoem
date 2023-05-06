@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
         Converter converter = new Converter();
 
         //Получение данных пользователя
-        if (usersDB.GetDataByID(id)) {
+        if (usersDB.getDataByID(id)) {
             name_text = usersDB.name;
             role_text = usersDB.role;
             profile_picture = usersDB.picture;
@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
     public void openProfileFragment(String buf_id) {
         bundle.putString("user_id", buf_id);
         Fragment user_profile_fragment;
-        usersDB.GetDataByID(buf_id);
+        usersDB.getDataByID(buf_id);
         if (usersDB.role.equals(this.getResources().getString(R.string.writer))) {
             user_profile_fragment = new WriterProfileFragment();
         }
@@ -207,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public Fragment getCurrentMainFragment() {
-        if(usersDB.GetDataByID(getCurrentUser())) {
+        if(usersDB.getDataByID(getCurrentUser())) {
             if (usersDB.role.equals(this.getResources().getString(R.string.writer))) {
                 return new WriterMainFragment();
             }
@@ -224,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public Fragment getCurrentProfileFragment() {
-        if(usersDB.GetDataByID(getCurrentUser())) {
+        if(usersDB.getDataByID(getCurrentUser())) {
             if (usersDB.role.equals(this.getResources().getString(R.string.writer))) {
                 return new WriterProfileFragment();
             }

@@ -46,7 +46,7 @@ public class WriterMainFragment extends Fragment {
         usersDB = new UsersDB(dbHelper, getContext());
         poemsDB = new PoemsDB(dbHelper, getContext());
 
-        usersDB.GetDataByID(((MainActivity)getActivity()).getCurrentUser());
+        usersDB.getDataByID(((MainActivity)getActivity()).getCurrentUser());
 
         List<Poem> myPoems = poemsDB.selectUsersPoems(((MainActivity)getActivity()).getCurrentUser());
         PoemListAdapter adapterMyPoems = new PoemListAdapter(getContext(), myPoems);
@@ -76,8 +76,8 @@ public class WriterMainFragment extends Fragment {
         filter_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                usersDB.ClearDB();
-                poemsDB.ClearDB();
+                usersDB.clearDB();
+                poemsDB.clearDB();
                 ((MainActivity)getActivity()).resetCurrentUser();
             }
         });

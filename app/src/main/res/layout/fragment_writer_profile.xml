@@ -97,18 +97,18 @@
                 android:layout_marginTop="10sp"/>
 
             <TextView
-                android:id="@+id/new_poems_textView"
+                android:id="@+id/liked_poems_textView"
                 android:layout_width="match_parent"
                 android:layout_height="50sp"
                 android:gravity="center"
                 android:layout_marginTop="10sp"
                 android:fontFamily="sans-serif-medium"
-                android:text="@string/favourite_poems"
+                android:text="@string/liked_poems"
                 android:textColor="@color/white"
                 android:textSize="25sp" />
 
             <com.example.littlepoem.WrapContentListView
-                android:id="@+id/favourite_poems"
+                android:id="@+id/liked_poems"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10sp"

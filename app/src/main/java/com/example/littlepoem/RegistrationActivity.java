@@ -92,7 +92,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 if (checkData(login, password, repeat_password, role)) {
                     Converter converter = new Converter();
                     byte[] defalt_picture = converter.drawableToByte(getApplicationContext().getResources().getDrawable(R.drawable.ic_profile_empty));
-                    if(usersDB.CreateNewUser(login, password, role, defalt_picture)) {
+                    if(usersDB.createNewUser(login, password, role, defalt_picture)) {
                         Intent intent = new Intent(view.getContext(), MainActivity.class);
                         SharedPreferences preferences = getSharedPreferences("CurrentUser", MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
@@ -140,7 +140,7 @@ public class RegistrationActivity extends AppCompatActivity {
             main_toast.show();
             return false;
         }
-        else if (usersDB.CheckLogin(login)) {
+        else if (usersDB.checkLogin(login)) {
             main_toast.setText(R.string.error_login_already_exists);
             main_toast.cancel();
             main_toast.show();

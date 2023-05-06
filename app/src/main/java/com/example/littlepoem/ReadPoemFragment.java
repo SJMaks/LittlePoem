@@ -1,6 +1,8 @@
 package com.example.littlepoem;
 
 import android.annotation.SuppressLint;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,7 +20,7 @@ import java.util.List;
 
 public class ReadPoemFragment extends Fragment {
     private TextView poemTitle, poemAuthor, poemGenre, poemRating, poemDate, poemText;
-    private LinearLayout reviewsButton;
+    private LinearLayout reviewsButton, action_buttons;
     private ImageView likeButton, copyButton, complaintButton;
 
     Poem poem;
@@ -25,6 +28,8 @@ public class ReadPoemFragment extends Fragment {
     private DBHelper dbHelper;
     private PoemsDB poemsDB;
     private UsersDB usersDB;
+
+    Toast main_toast;
 
     @Nullable
     @Override
@@ -41,10 +46,13 @@ public class ReadPoemFragment extends Fragment {
         likeButton = v.findViewById(R.id.like_button);
         copyButton = v.findViewById(R.id.copy_button);
         complaintButton = v.findViewById(R.id.complaint_button);
+        action_buttons = v.findViewById(R.id.poem_buttons);
 
         dbHelper = new DBHelper(getContext());
         poemsDB = new PoemsDB(dbHelper, getContext());
         usersDB = new UsersDB(dbHelper, getContext());
+
+        main_toast = Toast.makeText(getContext(), "", Toast.LENGTH_SHORT);
 
         setData();
 
@@ -58,14 +66,36 @@ public class ReadPoemFragment extends Fragment {
         likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                usersDB.getDataByID(((MainActivity)getActivity()).getCurrentUser());
+                if (!usersDB.liked_poems.contains(poem.getId())) {
+                    usersDB.addLikedPoem(poem.getId());
+                    likeButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_liked_button));
+                    main_toast.setText(getContext().getResources().getString(R.string.successfully_liked));
+                    main_toast.cancel();
+                    main_toast.show();
+                }
+                else {
+                    usersDB.removeLikedPoem(poem.getId());
+                    likeButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_like_button));
+                    main_toast.setText(getContext().getResources().getString(R.string.successfully_unliked));
+                    main_toast.cancel();
+                    main_toast.show();
+                }
             }
         });
 
         copyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(getContext().CLIPBOARD_SERVICE);
 
+                ClipData clip = ClipData.newPlainText("label", poemText.getText().toString());
+
+                clipboard.setPrimaryClip(clip);
+
+                main_toast.setText(getContext().getResources().getString(R.string.successfully_copied));
+                main_toast.cancel();
+                main_toast.show();
             }
         });
 
@@ -83,6 +113,21 @@ public class ReadPoemFragment extends Fragment {
     private void setData() {
         Bundle bundle = getArguments();
         poem = (Poem) bundle.getSerializable("poem");
+
+        usersDB.getDataByID(((MainActivity)getActivity()).getCurrentUser());
+        if (usersDB.liked_poems.contains(poem.getId())) {
+            likeButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_liked_button));
+        }
+        else {
+            likeButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_like_button));
+        }
+
+        reviewsButton.setVisibility(View.GONE);
+        action_buttons.setVisibility(View.GONE);
+        if (poem.getPublicationState() == 1) {
+            action_buttons.setVisibility(View.VISIBLE);
+            reviewsButton.setVisibility(View.VISIBLE);
+        }
 
         poemTitle.setText(poem.getTitle());
         poemAuthor.setText(poem.getAuthor());

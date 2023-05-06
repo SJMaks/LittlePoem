@@ -1,6 +1,7 @@
 package com.example.littlepoem;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,11 +23,13 @@ public class WriterProfileFragment extends Fragment {
 
     private TextView name, role, poems_title;
     private ImageView profile_picture, action_button;
-    private ListView myPoemsListView, favouritePoemsListView;
+    private ListView myPoemsListView, likedPoemsListView;
 
     private DBHelper dbHelper;
     private UsersDB usersDB;
     private PoemsDB poemsDB;
+
+    private String liked_poems;
 
     @Nullable
     @Override
@@ -39,7 +42,7 @@ public class WriterProfileFragment extends Fragment {
         profile_picture = v.findViewById(R.id.profile_picture);
         action_button = v.findViewById(R.id.action_button);
         myPoemsListView = v.findViewById(R.id.my_poems);
-        favouritePoemsListView = v.findViewById(R.id.favourite_poems);
+        likedPoemsListView = v.findViewById(R.id.liked_poems);
 
         dbHelper = new DBHelper(getContext());
         usersDB = new UsersDB(dbHelper, getContext());
@@ -51,8 +54,25 @@ public class WriterProfileFragment extends Fragment {
         PoemListAdapter adapterMyPoems = new PoemListAdapter(getContext(), myPoems);
         myPoemsListView.setAdapter(adapterMyPoems);
 
+        List<Poem> likedPoems = poemsDB.selectUsersLikedPoems(liked_poems);
+        PoemListAdapter adapterLikedPoems = new PoemListAdapter(getContext(), likedPoems);
+        likedPoemsListView.setAdapter(adapterLikedPoems);
+
         //Нажатие на стихотворение
         myPoemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Poem clickedPoem = (Poem) parent.getItemAtPosition(position);
+                if (usersDB.role.equals(getResources().getString(R.string.moderator))) {
+                    ((MainActivity)getActivity()).openReadPoemFragment(clickedPoem, new ModeratePoemFragment());
+                }
+                else {
+                    ((MainActivity)getActivity()).openReadPoemFragment(clickedPoem, new ReadPoemFragment());
+                }
+            }
+        });
+
+        likedPoemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Poem clickedPoem = (Poem) parent.getItemAtPosition(position);
@@ -81,13 +101,14 @@ public class WriterProfileFragment extends Fragment {
     }
 
     private void setData() {
-        usersDB.GetDataByID(getArguments().getString("user_id"));
+        usersDB.getDataByID(getArguments().getString("user_id"));
 
         name.setText(usersDB.name);
         role.setText(usersDB.role);
         profile_picture.setImageBitmap(usersDB.picture);
+        liked_poems = TextUtils.join(",", usersDB.liked_poems);
 
-        usersDB.GetDataByID(((MainActivity)getActivity()).getCurrentUser());
+        usersDB.getDataByID(((MainActivity)getActivity()).getCurrentUser());
 
         if (usersDB.role.equals(this.getResources().getString(R.string.moderator))) {
             poems_title.setText(this.getResources().getString(R.string.poems));

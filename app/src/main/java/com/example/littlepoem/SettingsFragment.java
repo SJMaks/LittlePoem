@@ -79,15 +79,15 @@ public class SettingsFragment extends Fragment {
             public void onClick(DialogInterface dialog, int id) {
                 Converter converter = new Converter();
 
-                usersDB.SetName(edit_name_text.getText().toString());
+                usersDB.setName(edit_name_text.getText().toString());
                 byte[] buf_picture = converter.drawableToByte(profile_picture.getDrawable());
-                usersDB.SetPicture(buf_picture);
+                usersDB.setPicture(buf_picture);
                 ((MainActivity)getActivity()).updateMenu(usersDB.id);
 
                 if(checkChangePassword(edit_current_password.getText().toString(),
                         edit_new_password.getText().toString(),
                         edit_repeat_new_password.getText().toString())) {
-                    usersDB.SetPassword(edit_repeat_new_password.getText().toString());
+                    usersDB.setPassword(edit_repeat_new_password.getText().toString());
                 }
 
                 main_toast.setText(R.string.change_settings_success);
@@ -134,7 +134,7 @@ public class SettingsFragment extends Fragment {
     }
 
     private void setData() {
-        if (usersDB.GetDataByID(((MainActivity)getActivity()).getCurrentUser())) {
+        if (usersDB.getDataByID(((MainActivity)getActivity()).getCurrentUser())) {
             login_text.setText(usersDB.login);
             edit_name_text.setText(usersDB.name);
             role_text.setText(usersDB.role);
