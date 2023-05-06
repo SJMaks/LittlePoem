@@ -11,6 +11,7 @@ public class Poem implements Serializable {
     private Spanned text;
     private int text_alignment;
     private String author;
+    private String author_id;
     private String genre;
     private float rating;
     private String publicationDate;
@@ -28,6 +29,7 @@ public class Poem implements Serializable {
         this.title = title;
         this.text = text;
         this.text_alignment = text_alignment;
+        this.author_id = Integer.toString(author);
         usersDB.GetDataByID(Integer.toString(author));
         this.author = usersDB.name;
         this.genre = genre;
@@ -55,6 +57,10 @@ public class Poem implements Serializable {
 
     public String getAuthor() {
         return author;
+    }
+
+    public String getAuthorID() {
+        return author_id;
     }
 
     public String getGenre() {

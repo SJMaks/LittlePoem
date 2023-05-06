@@ -22,7 +22,7 @@
     <string name="error_logging">Неверный логин или пароль</string>
     <string name="search">Поиск</string>
     <string name="new_poems">Новые</string>
-    <string name="my_poems">Мои</string>
+    <string name="my_poems">Мои стихотворения</string>
     <string name="favourite_poems">Избранные</string>
     <string name="add">Добавить</string>
     <string name="home_button_title">Главная</string>

@@ -20,8 +20,8 @@ import java.util.List;
 
 public class WriterProfileFragment extends Fragment {
 
-    private TextView name, role;
-    private ImageView profile_picture, settings_button;
+    private TextView name, role, poems_title;
+    private ImageView profile_picture, action_button;
     private ListView myPoemsListView, favouritePoemsListView;
 
     private DBHelper dbHelper;
@@ -35,8 +35,9 @@ public class WriterProfileFragment extends Fragment {
 
         name = v.findViewById(R.id.name);
         role = v.findViewById(R.id.role);
+        poems_title = v.findViewById(R.id.poems_textView);
         profile_picture = v.findViewById(R.id.profile_picture);
-        settings_button = v.findViewById(R.id.settings_button);
+        action_button = v.findViewById(R.id.action_button);
         myPoemsListView = v.findViewById(R.id.my_poems);
         favouritePoemsListView = v.findViewById(R.id.favourite_poems);
 
@@ -46,7 +47,7 @@ public class WriterProfileFragment extends Fragment {
 
         setData();
 
-        List<Poem> myPoems = poemsDB.selectUsersPoems(((MainActivity)getActivity()).getCurrentUser());
+        List<Poem> myPoems = poemsDB.selectUsersPoems(getArguments().getString("user_id"));
         PoemListAdapter adapterMyPoems = new PoemListAdapter(getContext(), myPoems);
         myPoemsListView.setAdapter(adapterMyPoems);
 
@@ -55,14 +56,24 @@ public class WriterProfileFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Poem clickedPoem = (Poem) parent.getItemAtPosition(position);
-                ((MainActivity)getActivity()).openReadPoemFragment(clickedPoem, new ReadPoemFragment());
+                if (usersDB.role.equals(getResources().getString(R.string.moderator))) {
+                    ((MainActivity)getActivity()).openReadPoemFragment(clickedPoem, new ModeratePoemFragment());
+                }
+                else {
+                    ((MainActivity)getActivity()).openReadPoemFragment(clickedPoem, new ReadPoemFragment());
+                }
             }
         });
 
-        settings_button.setOnClickListener(new View.OnClickListener() {
+        action_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)getActivity()).openFragment(new SettingsFragment());
+                if (usersDB.role.equals(getResources().getString(R.string.moderator))) {
+
+                }
+                else {
+                    ((MainActivity)getActivity()).openFragment(new SettingsFragment());
+                }
             }
         });
 
@@ -70,10 +81,21 @@ public class WriterProfileFragment extends Fragment {
     }
 
     private void setData() {
-        usersDB.GetDataByID(((MainActivity)getActivity()).getCurrentUser());
+        usersDB.GetDataByID(getArguments().getString("user_id"));
 
         name.setText(usersDB.name);
         role.setText(usersDB.role);
         profile_picture.setImageBitmap(usersDB.picture);
+
+        usersDB.GetDataByID(((MainActivity)getActivity()).getCurrentUser());
+
+        if (usersDB.role.equals(this.getResources().getString(R.string.moderator))) {
+            poems_title.setText(this.getResources().getString(R.string.poems));
+            action_button.setImageDrawable(this.getResources().getDrawable(R.drawable.ic_ban_button));
+        }
+        else {
+            poems_title.setText(this.getResources().getString(R.string.my_poems));
+            action_button.setImageDrawable(this.getResources().getDrawable(R.drawable.ic_settings_button_light));
+        }
     }
 }

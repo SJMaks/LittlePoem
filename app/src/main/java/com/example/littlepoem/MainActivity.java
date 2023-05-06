@@ -95,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     switch (position) {
                         case (0): {
+                            bundle.putString("user_id", getCurrentUser());
+                            profile_fragment.setArguments(bundle);
                             getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, profile_fragment).commit();
                             mDrawerLayout.close();
                             break;
@@ -174,6 +176,20 @@ public class MainActivity extends AppCompatActivity {
         bundle.putSerializable("poem", poem);
         read_fragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, read_fragment).commit();
+    }
+
+    public void openProfileFragment(String buf_id) {
+        bundle.putString("user_id", buf_id);
+        Fragment user_profile_fragment;
+        usersDB.GetDataByID(buf_id);
+        if (usersDB.role.equals(this.getResources().getString(R.string.writer))) {
+            user_profile_fragment = new WriterProfileFragment();
+        }
+        else {
+            user_profile_fragment = new ReaderProfileFragment();
+        }
+        user_profile_fragment.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, user_profile_fragment).commit();
     }
 
     public void resetCurrentUser() {

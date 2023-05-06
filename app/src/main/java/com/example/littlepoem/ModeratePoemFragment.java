@@ -3,6 +3,7 @@ package com.example.littlepoem;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.view.LayoutInflater;
@@ -21,7 +22,7 @@ import androidx.fragment.app.Fragment;
 public class ModeratePoemFragment extends Fragment {
     private TextView poemTitle, poemAuthor, poemGenre, poemText;
     private Button publishButton, rejectButton;
-    private LinearLayout buttons;
+    private LinearLayout buttons, reviews_button;
 
     Poem poem;
 
@@ -40,6 +41,7 @@ public class ModeratePoemFragment extends Fragment {
         poemGenre = v.findViewById(R.id.poem_genre);
         poemText = v.findViewById(R.id.poem_text);
         buttons = v.findViewById(R.id.buttons);
+        reviews_button = v.findViewById(R.id.reviews_button);
         publishButton = v.findViewById(R.id.publish_button);
         rejectButton = v.findViewById(R.id.reject_button);
 
@@ -100,6 +102,13 @@ public class ModeratePoemFragment extends Fragment {
             }
         });
 
+        poemAuthor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)getActivity()).openProfileFragment(poem.getAuthorID());
+            }
+        });
+
         return v;
     }
 
@@ -109,12 +118,17 @@ public class ModeratePoemFragment extends Fragment {
         poem = (Poem) bundle.getSerializable("poem");
 
         buttons.setVisibility(View.GONE);
+        reviews_button.setVisibility(View.GONE);
         if (poem.getPublicationState() == 0 || poem.getPublicationState() == 3) {
             buttons.setVisibility(View.VISIBLE);
+        }
+        if (poem.getPublicationState() == 1) {
+            reviews_button.setVisibility(View.VISIBLE);
         }
 
         poemTitle.setText(poem.getTitle());
         poemAuthor.setText(poem.getAuthor());
+        poemAuthor.setPaintFlags(poemAuthor.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         poemGenre.setText(poem.getGenre());
         poemText.setText(poem.getText());
         poemText.setTextAlignment(poem.getTextAlignment());

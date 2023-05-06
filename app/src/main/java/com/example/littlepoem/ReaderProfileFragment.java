@@ -18,7 +18,7 @@ import java.util.List;
 public class ReaderProfileFragment extends Fragment {
 
     private TextView name, role;
-    private ImageView profile_picture, settings_button;
+    private ImageView profile_picture, action_button;
     private ListView favouritePoemsListView;
 
     private DBHelper dbHelper;
@@ -33,7 +33,7 @@ public class ReaderProfileFragment extends Fragment {
         name = v.findViewById(R.id.name);
         role = v.findViewById(R.id.role);
         profile_picture = v.findViewById(R.id.profile_picture);
-        settings_button = v.findViewById(R.id.settings_button);
+        action_button = v.findViewById(R.id.action_button);
         favouritePoemsListView = v.findViewById(R.id.favourite_poems);
 
         dbHelper = new DBHelper(getContext());
@@ -42,10 +42,15 @@ public class ReaderProfileFragment extends Fragment {
 
         setData();
 
-        settings_button.setOnClickListener(new View.OnClickListener() {
+        action_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)getActivity()).openFragment(new SettingsFragment());
+                if (usersDB.role.equals(getResources().getString(R.string.moderator))) {
+
+                }
+                else {
+                    ((MainActivity)getActivity()).openFragment(new SettingsFragment());
+                }
             }
         });
 
@@ -53,10 +58,19 @@ public class ReaderProfileFragment extends Fragment {
     }
 
     private void setData() {
-        usersDB.GetDataByID(((MainActivity)getActivity()).getCurrentUser());
+        usersDB.GetDataByID(getArguments().getString("user_id"));
 
         name.setText(usersDB.name);
         role.setText(usersDB.role);
         profile_picture.setImageBitmap(usersDB.picture);
+
+        usersDB.GetDataByID(((MainActivity)getActivity()).getCurrentUser());
+
+        if (usersDB.role.equals(this.getResources().getString(R.string.moderator))) {
+            action_button.setImageDrawable(this.getResources().getDrawable(R.drawable.ic_ban_button));
+        }
+        else {
+            action_button.setImageDrawable(this.getResources().getDrawable(R.drawable.ic_settings_button_light));
+        }
     }
 }

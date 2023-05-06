@@ -22,7 +22,7 @@
     </androidx.cardview.widget.CardView>
 
     <ImageView
-        android:id="@+id/settings_button"
+        android:id="@+id/action_button"
         android:layout_width="60sp"
         android:layout_height="60sp"
         android:layout_marginEnd="10sp"
@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/profile_cardView"
         android:layout_toEndOf="@id/profile_cardView"
-        android:layout_toStartOf="@id/settings_button"
+        android:layout_toStartOf="@id/action_button"
         android:gravity="center"
         android:text="@string/user_name"
         android:fontFamily="sans-serif-medium"
@@ -51,7 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/profile_cardView"
-        android:layout_toStartOf="@id/settings_button"
+        android:layout_toStartOf="@id/action_button"
         android:layout_alignBottom="@id/profile_cardView"
         android:gravity="center"
         android:text="@string/role"
