@@ -39,13 +39,17 @@
     <string name="save_settings">Сохранить изменения</string>
     <string name="save">Сохранить</string>
     <string name="cancel">Отмена</string>
+    <string name="publish">Опубликовать</string>
+    <string name="reject">Отклонить</string>
     <string name="current_password">Текущий пароль</string>
     <string name="new_password">Новый пароль</string>
     <string name="error_wrong_name">Некорректное имя</string>
     <string name="error_wrong_current_password">Неверный текущий пароль</string>
+    <string name="error_main_fragment">Ошибка\nНе удалось войти в аккаунт</string>
     <string name="change_settings_success">Данные успешно обновлены</string>
     <string name="new_poem_page_title">Новое стихотворение</string>
     <string name="poem_name_title_colon">Название:</string>
+    <string name="poem_author_title_colon">Автор:</string>
     <string name="poem_genre_title_colon">Жанр:</string>
     <string name="poem_rating_title_colon">Рейтинг:</string>
     <string name="poem_date_title_colon">Дата публикации:</string>
@@ -86,4 +90,5 @@
     <string name="confirm_send_poem_to_moderation">Вы уверены, что хотите отправить стихотворение на модерацию?</string>
     <string name="confirm_change_settings">Вы уверены, что хотите изменить данные профиля?</string>
     <string name="yes_button">Да</string>
+    <string name="moderate_title">Проверка</string>
 </resources>

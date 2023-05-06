@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark">
+
+    <TextView
+        android:id="@+id/fresh_poems_textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/error_main_fragment"
+        android:textColor="@color/white"
+        android:textSize="25sp" />
+
+</RelativeLayout>

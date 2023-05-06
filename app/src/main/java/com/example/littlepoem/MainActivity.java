@@ -1,29 +1,20 @@
 package com.example.littlepoem;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -35,13 +26,7 @@ public class MainActivity extends AppCompatActivity {
     Bundle bundle;
 
     //Фрагменты
-    private WriterMainFragment writer_main_fragment;
-    private ReaderMainFragment reader_main_fragment;
-    private ModeratorMainFragment moderator_main_fragment;
-    private AboutAppFragment about_app_fragment;
-    private SettingsFragment settings_fragment;
-    private EditPoemFragment edit_poem_fragment;
-    private ReadPoemFragment read_poem_fragment;
+    private Fragment mainFragment, about_app_fragment, settings_fragment, read_poem_fragment, moderate_poem_fragment;
 
     //Меню
     private ListView mDrawerList;
@@ -75,14 +60,6 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             //Инициализация переменных
-            writer_main_fragment = new WriterMainFragment();
-            reader_main_fragment = new ReaderMainFragment();
-            moderator_main_fragment = new ModeratorMainFragment();
-            about_app_fragment = new AboutAppFragment();
-            settings_fragment = new SettingsFragment();
-            edit_poem_fragment = new EditPoemFragment();
-            read_poem_fragment = new ReadPoemFragment();
-
             mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
             menu_button = findViewById(R.id.menu_button);
 
@@ -91,22 +68,18 @@ public class MainActivity extends AppCompatActivity {
 
             bundle = new Bundle();
 
+            mainFragment = getCurrentMainFragment();
+            about_app_fragment = new AboutAppFragment();
+            settings_fragment = new SettingsFragment();
+            read_poem_fragment = new ReadPoemFragment();
+            moderate_poem_fragment = new ModeratePoemFragment();
+
             bundle.putString("user_id", Integer.toString(getCurrentUser()));
             updateMenu(Integer.toString(getCurrentUser()));
 
             //Инициализация основного фрагмента
-            if (usersDB.role.equals(this.getResources().getString(R.string.writer))) {
-                writer_main_fragment.setArguments(bundle);
-                getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, writer_main_fragment).commit();
-            }
-            else  if (usersDB.role.equals(this.getResources().getString(R.string.reader))) {
-                reader_main_fragment.setArguments(bundle);
-                getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, reader_main_fragment).commit();
-            }
-            else {
-                moderator_main_fragment.setArguments(bundle);
-                getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, moderator_main_fragment).commit();
-            }
+            mainFragment.setArguments(bundle);
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, mainFragment).commit();
 
             //Кнопка меню
             menu_button.setOnClickListener(new View.OnClickListener() {
@@ -126,9 +99,8 @@ public class MainActivity extends AppCompatActivity {
                             break;
                         }
                         case (1): {
-                            writer_main_fragment.setArguments(bundle);
-                            reader_main_fragment.setArguments(bundle);
-                            getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, usersDB.role.equals(getResources().getString(R.string.writer))?writer_main_fragment:usersDB.role.equals(getResources().getString(R.string.reader))?reader_main_fragment:moderator_main_fragment).commit();
+                            mainFragment.setArguments(bundle);
+                            getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, mainFragment).commit();
                             mDrawerLayout.close();
                             break;
                         }
@@ -194,30 +166,21 @@ public class MainActivity extends AppCompatActivity {
         mDrawerList.setAdapter(adapter);
     }
 
-    public void openFragment(int i) {
-        switch (i){
-            case (0):
-                writer_main_fragment.setArguments(bundle);
-                reader_main_fragment.setArguments(bundle);
-                getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, usersDB.role.equals(getResources().getString(R.string.writer))?writer_main_fragment:usersDB.role.equals(getResources().getString(R.string.reader))?reader_main_fragment:moderator_main_fragment).commit();
-                break;
-            case (1):
-                settings_fragment.setArguments(bundle);
-                getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, settings_fragment).commit();
-                break;
-            case (2):
-                getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, about_app_fragment).commit();
-                break;
-            case (3):
-                getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, edit_poem_fragment).commit();
-                break;
-        }
+    public void openFragment(Fragment fragment) {
+        fragment.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, fragment).commit();
     }
 
     public void openReadPoemFragment(Poem poem) {
         bundle.putSerializable("poem", poem);
         read_poem_fragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, read_poem_fragment).commit();
+    }
+
+    public void openModeratePoemFragment(Poem poem) {
+        bundle.putSerializable("poem", poem);
+        moderate_poem_fragment.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, moderate_poem_fragment).commit();
     }
 
     public void resetCurrentUser() {
@@ -234,8 +197,25 @@ public class MainActivity extends AppCompatActivity {
         return Integer.valueOf(current_id);
     }
 
+    public Fragment getCurrentMainFragment() {
+        if(usersDB.GetDataByID(Integer.toString(getCurrentUser()))) {
+            if (usersDB.role.equals(this.getResources().getString(R.string.writer))) {
+                return new WriterMainFragment();
+            }
+
+            if (usersDB.role.equals(this.getResources().getString(R.string.reader))) {
+                return new ReaderMainFragment();
+            }
+
+            return new ModeratorMainFragment();
+        }
+        else {
+            return new ErrorMainFragment();
+        }
+    }
+
     @Override
     public void onBackPressed() {
-        openFragment(0);
+        openFragment(getCurrentMainFragment());
     }
 }

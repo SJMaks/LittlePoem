@@ -69,7 +69,8 @@ public class WriterMainFragment extends Fragment {
         add_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity)getActivity()).openFragment(3);
+                Fragment fragment = new EditPoemFragment();
+                ((MainActivity)getActivity()).openFragment(fragment);
             }
         });
 

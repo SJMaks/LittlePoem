@@ -172,7 +172,7 @@ public class EditPoemFragment extends Fragment {
                     main_toast.setText(getContext().getResources().getString(R.string.successfully_sent_on_moderation));
                     main_toast.cancel();
                     main_toast.show();
-                    ((MainActivity)getActivity()).openFragment(0);
+                    ((MainActivity)getActivity()).openFragment(((MainActivity)getActivity()).getCurrentMainFragment());
                 }
             }
         });
@@ -239,7 +239,7 @@ public class EditPoemFragment extends Fragment {
                 main_toast.setText(getContext().getResources().getString(R.string.draft_saved));
                 main_toast.cancel();
                 main_toast.show();
-                ((MainActivity)getActivity()).openFragment(0);
+                ((MainActivity)getActivity()).openFragment(((MainActivity)getActivity()).getCurrentMainFragment());
             }
         });
 

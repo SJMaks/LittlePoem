@@ -50,7 +50,7 @@ public class ModeratorMainFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Poem clickedPoem = (Poem) parent.getItemAtPosition(position);
-                ((MainActivity)getActivity()).openReadPoemFragment(clickedPoem);
+                ((MainActivity)getActivity()).openModeratePoemFragment(clickedPoem);
             }
         });
 
