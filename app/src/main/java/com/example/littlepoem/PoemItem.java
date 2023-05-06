@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.List;
 
@@ -42,11 +43,27 @@ class PoemListAdapter extends BaseAdapter {
         TextView titleView = (TextView) convertView.findViewById(R.id.poem_title);
         TextView authorView = (TextView) convertView.findViewById(R.id.poem_author);
         TextView ratingView = (TextView) convertView.findViewById(R.id.poem_rating);
+        ImageView ratingState = (ImageView) convertView.findViewById(R.id.star);
 
         Poem poem = mPoemItems.get(position);
         titleView.setText(poem.getTitle());
         authorView.setText(poem.getAuthor());
-        ratingView.setText(String.format("%.1f", poem.getRating()) + "/5");
+        if (poem.getPublicationState() == 0) {
+            ratingView.setText(convertView.getResources().getString(R.string.moderate_title));
+            ratingState.setImageDrawable(convertView.getResources().getDrawable(R.drawable.ic_wait));
+        }
+        else if (poem.getPublicationState() == 2) {
+            ratingView.setText(convertView.getResources().getString(R.string.poem_has_been_rejected));
+            ratingState.setImageDrawable(convertView.getResources().getDrawable(R.drawable.ic_reject));
+        }
+        else if (poem.getPublicationState() == 3) {
+            ratingView.setText(convertView.getResources().getString(R.string.moderate_title));
+            ratingState.setImageDrawable(convertView.getResources().getDrawable(R.drawable.ic_complaint));
+        }
+        else {
+            ratingView.setText(String.format("%.1f", poem.getRating()) + "/5");
+            ratingState.setImageDrawable(convertView.getResources().getDrawable(R.drawable.ic_star));
+        }
 
         return convertView;
     }

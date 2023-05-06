@@ -23,7 +23,8 @@ public class WriterMainFragment extends Fragment {
     private EditText edit_search_text;
     private ImageView filter_button, search_button;
     private LinearLayout add_button;
-    private ListView publishedPoemsListView;
+    private ListView myPoemsListView;
+    private ListView newPoemsListView;
 
     private DBHelper dbHelper;
     private UsersDB usersDB;
@@ -38,7 +39,8 @@ public class WriterMainFragment extends Fragment {
         filter_button = v.findViewById(R.id.filter_button);
         search_button = v.findViewById(R.id.search_button);
         add_button = v.findViewById(R.id.add_button);
-        publishedPoemsListView = v.findViewById(R.id.published_poems);
+        myPoemsListView = v.findViewById(R.id.my_poems);
+        newPoemsListView = v.findViewById(R.id.new_poems);
 
         dbHelper = new DBHelper(getContext());
         usersDB = new UsersDB(dbHelper, getContext());
@@ -46,12 +48,23 @@ public class WriterMainFragment extends Fragment {
 
         usersDB.GetDataByID(getArguments().getString("user_id"));
 
-        List<Poem> publishedPoems = poemsDB.selectPublishedPoems();
-        PoemListAdapter adapter = new PoemListAdapter(getContext(), publishedPoems);
-        publishedPoemsListView.setAdapter(adapter);
+        List<Poem> myPoems = poemsDB.selectMyPoems(((MainActivity)getActivity()).getCurrentUser());
+        PoemListAdapter adapterMyPoems = new PoemListAdapter(getContext(), myPoems);
+        myPoemsListView.setAdapter(adapterMyPoems);
+
+        List<Poem> newPoems = poemsDB.selectNewPoems();
+        PoemListAdapter adapterNewPoems = new PoemListAdapter(getContext(), newPoems);
+        newPoemsListView.setAdapter(adapterNewPoems);
 
         //Нажатие на стихотворение
-        publishedPoemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        myPoemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Poem clickedPoem = (Poem) parent.getItemAtPosition(position);
+                ((MainActivity)getActivity()).openReadPoemFragment(clickedPoem);
+            }
+        });
+        newPoemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Poem clickedPoem = (Poem) parent.getItemAtPosition(position);

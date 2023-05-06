@@ -21,8 +21,9 @@
     <string name="error_login_already_exists">Логин занят</string>
     <string name="error_logging">Неверный логин или пароль</string>
     <string name="search">Поиск</string>
-    <string name="fresh_poems">Новые</string>
-    <string name="mine">Мои</string>
+    <string name="new_poems">Новые</string>
+    <string name="my_poems">Мои</string>
+    <string name="favourite_poems">Избранные</string>
     <string name="add">Добавить</string>
     <string name="home_button_title">Главная</string>
     <string name="settings_button_title">Настройки</string>
@@ -43,6 +44,7 @@
     <string name="reject">Отклонить</string>
     <string name="current_password">Текущий пароль</string>
     <string name="new_password">Новый пароль</string>
+    <string name="user_name">Имя</string>
     <string name="error_wrong_name">Некорректное имя</string>
     <string name="error_wrong_current_password">Неверный текущий пароль</string>
     <string name="error_main_fragment">Ошибка\nНе удалось войти в аккаунт</string>
@@ -95,4 +97,5 @@
     <string name="confirm_reject_poem">Вы уверены, что хотите отклонить стихотворение?</string>
     <string name="yes_button">Да</string>
     <string name="moderate_title">Проверка</string>
+    <string name="poem_has_been_rejected">Отклонено</string>
 </resources>
