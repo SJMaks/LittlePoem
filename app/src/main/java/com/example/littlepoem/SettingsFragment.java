@@ -157,7 +157,7 @@ public class SettingsFragment extends Fragment {
     }
 
     private boolean isCorrectName(String str) {
-        String regex = "^[A-Za-zА-Яа-я]\\w{4,19}$";
+        String regex = "^[A-Za-zА-Яа-я]\\w{3,19}$";
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(str);
         return m.matches();

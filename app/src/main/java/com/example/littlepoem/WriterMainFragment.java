@@ -5,9 +5,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,6 +23,7 @@ public class WriterMainFragment extends Fragment {
     private EditText edit_search_text;
     private ImageView filter_button, search_button;
     private LinearLayout add_button;
+    private ListView publishedPoemsListView;
 
     private DBHelper dbHelper;
     private UsersDB usersDB;
@@ -35,12 +38,26 @@ public class WriterMainFragment extends Fragment {
         filter_button = v.findViewById(R.id.filter_button);
         search_button = v.findViewById(R.id.search_button);
         add_button = v.findViewById(R.id.add_button);
+        publishedPoemsListView = v.findViewById(R.id.published_poems);
 
         dbHelper = new DBHelper(getContext());
         usersDB = new UsersDB(dbHelper, getContext());
         poemsDB = new PoemsDB(dbHelper, getContext());
 
         usersDB.GetDataByID(getArguments().getString("user_id"));
+
+        List<Poem> publishedPoems = poemsDB.selectPublishedPoems();
+        PoemListAdapter adapter = new PoemListAdapter(getContext(), publishedPoems);
+        publishedPoemsListView.setAdapter(adapter);
+
+        //Нажатие на стихотворение
+        publishedPoemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Poem clickedPoem = (Poem) parent.getItemAtPosition(position);
+                ((MainActivity)getActivity()).openReadPoemFragment(clickedPoem);
+            }
+        });
 
         //Кнопка фильтра поиска
         filter_button.setOnClickListener(new View.OnClickListener() {

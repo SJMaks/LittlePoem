@@ -1,5 +1,6 @@
 package com.example.littlepoem;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,6 +79,7 @@ public class ReadPoemFragment extends Fragment {
         return v;
     }
 
+    @SuppressLint("WrongConstant")
     private void setData() {
         Bundle bundle = getArguments();
         poem = (Poem) bundle.getSerializable("poem");
@@ -88,5 +90,6 @@ public class ReadPoemFragment extends Fragment {
         poemRating.setText(String.valueOf(poem.getRating()));
         poemDate.setText(poem.getPublicationDate());
         poemText.setText(poem.getText());
+        poemText.setTextAlignment(poem.getTextAlignment());
     }
 }

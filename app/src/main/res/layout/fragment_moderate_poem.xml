@@ -140,6 +140,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/poem"
                 android:layout_marginTop="10sp"
+                android:layout_marginHorizontal="15sp"
                 android:gravity="center"
                 android:text="@string/poem"
                 android:fontFamily="sans-serif-light"

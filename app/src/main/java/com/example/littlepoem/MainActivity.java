@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(null);
 
         //Проверка id текущего пользователя
-        if (Integer.toString(getCurrentUser()).equals("")) {
+        if (getCurrentUser().equals("")) {
             Intent intent = new Intent(this, RegistrationActivity.class);
             startActivity(intent);
             overridePendingTransition(0, 0);
@@ -74,8 +74,8 @@ public class MainActivity extends AppCompatActivity {
             read_poem_fragment = new ReadPoemFragment();
             moderate_poem_fragment = new ModeratePoemFragment();
 
-            bundle.putString("user_id", Integer.toString(getCurrentUser()));
-            updateMenu(Integer.toString(getCurrentUser()));
+            bundle.putString("user_id", getCurrentUser());
+            updateMenu(getCurrentUser());
 
             //Инициализация основного фрагмента
             mainFragment.setArguments(bundle);
@@ -190,15 +190,15 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    public int getCurrentUser() {
+    public String getCurrentUser() {
         SharedPreferences preferences = getSharedPreferences("CurrentUser", MODE_PRIVATE);
         String current_id = preferences.getString("current_user_id", "");
 
-        return Integer.valueOf(current_id);
+        return current_id;
     }
 
     public Fragment getCurrentMainFragment() {
-        if(usersDB.GetDataByID(Integer.toString(getCurrentUser()))) {
+        if(usersDB.GetDataByID(getCurrentUser())) {
             if (usersDB.role.equals(this.getResources().getString(R.string.writer))) {
                 return new WriterMainFragment();
             }

@@ -85,10 +85,14 @@
     </string-array>
     <string name="draft_saved">Черновик сохранён до перезапуска приложения</string>
     <string name="need_moderation">В ожидании проверки</string>
-    <string name="successfully_sent_on_moderation">Стихотворение успешно отправлено на модерацию</string>
+    <string name="successfully_sent_on_moderation_poem">Стихотворение успешно отправлено на модерацию</string>
+    <string name="successfully_published_poem">Стихотворение успешно опубликовано</string>
+    <string name="successfully_rejected_poem">Стихотворение успешно отклонено</string>
     <string name="moderator">Модератор</string>
     <string name="confirm_send_poem_to_moderation">Вы уверены, что хотите отправить стихотворение на модерацию?</string>
     <string name="confirm_change_settings">Вы уверены, что хотите изменить данные профиля?</string>
+    <string name="confirm_publish_poem">Вы уверены, что хотите опубликовать стихотворение?</string>
+    <string name="confirm_reject_poem">Вы уверены, что хотите отклонить стихотворение?</string>
     <string name="yes_button">Да</string>
     <string name="moderate_title">Проверка</string>
 </resources>

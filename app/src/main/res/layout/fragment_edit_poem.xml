@@ -115,7 +115,7 @@
                 android:layout_marginHorizontal="15sp"
                 android:fontFamily="sans-serif-medium"
                 android:backgroundTint="@color/white"
-                android:inputType="text"
+                android:inputType="textCapWords|textAutoCorrect"
                 android:textColor="@color/white"
                 android:textSize="20sp"/>
 
@@ -189,7 +189,7 @@
                     android:layout_alignParentEnd="true"
                     android:background="@null"
                     android:fontFamily="sans-serif-light"
-                    android:inputType="textMultiLine"
+                    android:inputType="textMultiLine|textAutoCorrect|textCapSentences"
                     android:textColor="@color/white"
                     android:textColorHint="@color/mid_grey"
                     android:hint="@string/input_your_poem_text"

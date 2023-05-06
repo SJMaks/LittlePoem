@@ -130,6 +130,7 @@ public class UsersDB {
         //Регистрация модератора
         ContentValues contentValues = new ContentValues();
 
+        contentValues.put(DBHelper.KEY_ID, 1);
         contentValues.put(DBHelper.KEY_LOGIN, "moderator");
         contentValues.put(DBHelper.KEY_PASSWORD, "7qx2De7uht");
         contentValues.put(DBHelper.KEY_NAME, context.getResources().getString(R.string.moderator));

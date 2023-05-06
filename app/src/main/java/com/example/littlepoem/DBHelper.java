@@ -25,11 +25,13 @@ public class DBHelper extends SQLiteOpenHelper{
 
     public static final String KEY_TITLE = "title";
     public static final String KEY_TEXT = "text";
+    public static final String KEY_TEXT_ALIGNMENT = "text_alignment";
     public static final String KEY_AUTHOR = "author";
     public static final String KEY_GENRE = "genre";
     public static final String KEY_RATING = "rating";
     public static final String KEY_PUBLICATION_DATE = "publication_date";
     public static final String KEY_PUBLICATION_STATE = "publication_state";
+    public static final String KEY_MODERATOR = "moderator";
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -42,8 +44,8 @@ public class DBHelper extends SQLiteOpenHelper{
                 KEY_NAME + " text," + KEY_ROLE + " text," + KEY_PROFILE_PICTURE + " blob)");
         db.execSQL("create table " + TABLE_POEMS + "(" + KEY_ID
                 + " integer primary key," + KEY_TITLE + " text," + KEY_TEXT + " text," +
-                KEY_AUTHOR + " integer," + KEY_GENRE + " text," + KEY_RATING + " float," +
-                KEY_PUBLICATION_DATE + " date," + KEY_PUBLICATION_STATE + " integer)");
+                KEY_TEXT_ALIGNMENT + " integer," + KEY_AUTHOR + " integer," + KEY_GENRE + " text," + KEY_RATING + " float," +
+                KEY_PUBLICATION_DATE + " date," + KEY_PUBLICATION_STATE + " integer," + KEY_MODERATOR + " integer)");
     }
 
     @Override

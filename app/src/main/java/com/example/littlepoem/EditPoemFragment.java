@@ -41,6 +41,8 @@ public class EditPoemFragment extends Fragment {
 
     private Toast main_toast;
 
+    private int text_alignment = View.TEXT_ALIGNMENT_TEXT_START;
+
     private void toggleBoldStyle() {
         // Get the selected text from EditText
         int startSelection = editPoemText.getSelectionStart();
@@ -166,10 +168,10 @@ public class EditPoemFragment extends Fragment {
             public void onClick(DialogInterface dialog, int id) {
                 String title = editPoemTitleText.getText().toString().trim();
                 Spannable text = editPoemText.getText();
-                int author = ((MainActivity)getActivity()).getCurrentUser();
+                String author = ((MainActivity)getActivity()).getCurrentUser();
 
-                if(poemsDB.CreateNewPoem(title, text, author, genre)) {
-                    main_toast.setText(getContext().getResources().getString(R.string.successfully_sent_on_moderation));
+                if(poemsDB.CreateNewPoem(title, text, text_alignment, author, genre)) {
+                    main_toast.setText(getContext().getResources().getString(R.string.successfully_sent_on_moderation_poem));
                     main_toast.cancel();
                     main_toast.show();
                     ((MainActivity)getActivity()).openFragment(((MainActivity)getActivity()).getCurrentMainFragment());
@@ -206,6 +208,7 @@ public class EditPoemFragment extends Fragment {
                 buttonAlignLeft.setImageDrawable(getContext().getResources().getDrawable(R.drawable.ic_align_left_button_pushed));
                 buttonAlignCenter.setImageDrawable(getContext().getResources().getDrawable(R.drawable.ic_align_center_button));
                 buttonAlignRight.setImageDrawable(getContext().getResources().getDrawable(R.drawable.ic_align_right_button));
+                text_alignment = View.TEXT_ALIGNMENT_TEXT_START;
             }
         });
 
@@ -218,6 +221,7 @@ public class EditPoemFragment extends Fragment {
                 buttonAlignLeft.setImageDrawable(getContext().getResources().getDrawable(R.drawable.ic_align_left_button));
                 buttonAlignCenter.setImageDrawable(getContext().getResources().getDrawable(R.drawable.ic_align_center_button_pushed));
                 buttonAlignRight.setImageDrawable(getContext().getResources().getDrawable(R.drawable.ic_align_right_button));
+                text_alignment = View.TEXT_ALIGNMENT_CENTER;
             }
         });
 
@@ -230,6 +234,7 @@ public class EditPoemFragment extends Fragment {
                 buttonAlignLeft.setImageDrawable(getContext().getResources().getDrawable(R.drawable.ic_align_left_button));
                 buttonAlignCenter.setImageDrawable(getContext().getResources().getDrawable(R.drawable.ic_align_center_button));
                 buttonAlignRight.setImageDrawable(getContext().getResources().getDrawable(R.drawable.ic_align_right_button_pushed));
+                text_alignment = View.TEXT_ALIGNMENT_TEXT_END;
             }
         });
 
