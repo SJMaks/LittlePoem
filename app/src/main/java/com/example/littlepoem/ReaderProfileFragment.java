@@ -18,12 +18,12 @@ import java.util.List;
 
 public class ReaderProfileFragment extends Fragment {
 
-    private TextView name, role;
+    private TextView name, role, liked_poems_title;
     private ImageView profile_picture, action_button;
     private ListView likedPoemsListView;
 
     private DBHelper dbHelper;
-    private UsersDB usersDB;
+    private UsersDB currentUserDB, profileUserDB;
     private PoemsDB poemsDB;
 
     private String liked_poems;
@@ -35,64 +35,96 @@ public class ReaderProfileFragment extends Fragment {
 
         name = v.findViewById(R.id.name);
         role = v.findViewById(R.id.role);
+        liked_poems_title = v.findViewById(R.id.liked_poems_textView);
         profile_picture = v.findViewById(R.id.profile_picture);
         action_button = v.findViewById(R.id.action_button);
         likedPoemsListView = v.findViewById(R.id.liked_poems);
 
         dbHelper = new DBHelper(getContext());
-        usersDB = new UsersDB(dbHelper, getContext());
+        currentUserDB = new UsersDB(dbHelper, getContext());
+        profileUserDB = new UsersDB(dbHelper, getContext());
         poemsDB = new PoemsDB(dbHelper, getContext());
 
         setData();
-
-        List<Poem> likedPoems = poemsDB.selectUsersLikedPoems(liked_poems);
-        PoemListAdapter adapterLikedPoems = new PoemListAdapter(getContext(), likedPoems);
-        likedPoemsListView.setAdapter(adapterLikedPoems);
-
-        //Нажатие на стихотворение
-        likedPoemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Poem clickedPoem = (Poem) parent.getItemAtPosition(position);
-                if (usersDB.role.equals(getResources().getString(R.string.moderator))) {
-                    ((MainActivity)getActivity()).openReadPoemFragment(clickedPoem, new ModeratePoemFragment());
-                }
-                else {
-                    ((MainActivity)getActivity()).openReadPoemFragment(clickedPoem, new ReadPoemFragment());
-                }
-            }
-        });
-
-        action_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (usersDB.role.equals(getResources().getString(R.string.moderator))) {
-
-                }
-                else {
-                    ((MainActivity)getActivity()).openFragment(new SettingsFragment());
-                }
-            }
-        });
 
         return v;
     }
 
     private void setData() {
-        usersDB.getDataByID(getArguments().getString("user_id"));
+        profileUserDB.getDataByID(getArguments().getString("user_id"));
+        currentUserDB.getDataByID(((MainActivity)getActivity()).getCurrentUser());
 
-        name.setText(usersDB.name);
-        role.setText(usersDB.role);
-        profile_picture.setImageBitmap(usersDB.picture);
-        liked_poems = TextUtils.join(",", usersDB.liked_poems);
+        name.setText(profileUserDB.name);
+        role.setText(profileUserDB.role);
+        profile_picture.setImageBitmap(profileUserDB.picture);
 
-        usersDB.getDataByID(((MainActivity)getActivity()).getCurrentUser());
+        action_button.setVisibility(View.INVISIBLE);
+        liked_poems_title.setVisibility(View.GONE);
+        likedPoemsListView.setVisibility(View.GONE);
 
-        if (usersDB.role.equals(this.getResources().getString(R.string.moderator))) {
+        if (currentUserDB.id.equals(profileUserDB.id)) {
+            action_button.setVisibility(View.VISIBLE);
+            action_button.setImageDrawable(this.getResources().getDrawable(R.drawable.ic_settings_button_light));
+            liked_poems = TextUtils.join(",", profileUserDB.liked_poems);
+            liked_poems_title.setVisibility(View.VISIBLE);
+            likedPoemsListView.setVisibility(View.VISIBLE);
+
+            List<Poem> likedPoems = poemsDB.selectUsersLikedPoems(liked_poems);
+            PoemListAdapter adapterLikedPoems = new PoemListAdapter(getContext(), likedPoems);
+            likedPoemsListView.setAdapter(adapterLikedPoems);
+
+            likedPoemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Poem clickedPoem = (Poem) parent.getItemAtPosition(position);
+                    if (currentUserDB.role.equals(getResources().getString(R.string.moderator))) {
+                        ((MainActivity)getActivity()).openReadPoemFragment(clickedPoem, new ModeratePoemFragment());
+                    }
+                    else {
+                        ((MainActivity)getActivity()).openReadPoemFragment(clickedPoem, new ReadPoemFragment());
+                    }
+                }
+            });
+
+            action_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((MainActivity)getActivity()).openFragment(new SettingsFragment());
+                }
+            });
+        }
+        else if (currentUserDB.role.equals(this.getResources().getString(R.string.moderator))) {
+            action_button.setVisibility(View.VISIBLE);
             action_button.setImageDrawable(this.getResources().getDrawable(R.drawable.ic_ban_button));
+            liked_poems = TextUtils.join(",", profileUserDB.liked_poems);
+            liked_poems_title.setVisibility(View.VISIBLE);
+            likedPoemsListView.setVisibility(View.VISIBLE);
+
+            List<Poem> likedPoems = poemsDB.selectUsersLikedPoems(liked_poems);
+            PoemListAdapter adapterLikedPoems = new PoemListAdapter(getContext(), likedPoems);
+            likedPoemsListView.setAdapter(adapterLikedPoems);
+
+            likedPoemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Poem clickedPoem = (Poem) parent.getItemAtPosition(position);
+                    if (currentUserDB.role.equals(getResources().getString(R.string.moderator))) {
+                        ((MainActivity)getActivity()).openReadPoemFragment(clickedPoem, new ModeratePoemFragment());
+                    }
+                    else {
+                        ((MainActivity)getActivity()).openReadPoemFragment(clickedPoem, new ReadPoemFragment());
+                    }
+                }
+            });
+
+            action_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
         }
         else {
-            action_button.setImageDrawable(this.getResources().getDrawable(R.drawable.ic_settings_button_light));
         }
     }
 }

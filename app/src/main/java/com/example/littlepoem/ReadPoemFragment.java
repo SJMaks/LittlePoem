@@ -3,6 +3,7 @@ package com.example.littlepoem;
 import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -106,6 +107,13 @@ public class ReadPoemFragment extends Fragment {
             }
         });
 
+        poemAuthor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)getActivity()).openProfileFragment(poem.getAuthorID());
+            }
+        });
+
         return v;
     }
 
@@ -131,6 +139,7 @@ public class ReadPoemFragment extends Fragment {
 
         poemTitle.setText(poem.getTitle());
         poemAuthor.setText(poem.getAuthor());
+        poemAuthor.setPaintFlags(poemAuthor.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         poemGenre.setText(poem.getGenre());
         poemRating.setText(String.valueOf(poem.getRating()));
         poemDate.setText(poem.getPublicationDate());
