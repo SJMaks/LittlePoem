@@ -60,13 +60,24 @@
             <TextView
                 android:id="@+id/fresh_poems_textView"
                 android:layout_width="match_parent"
-                android:layout_height="50sp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_marginTop="10sp"
                 android:fontFamily="sans-serif-medium"
                 android:text="@string/need_moderation"
                 android:textColor="@color/white"
                 android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/type_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="10sp"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/poems"
+                android:textColor="@color/white"
+                android:textSize="22sp" />
 
             <com.example.littlepoem.WrapContentListView
                 android:id="@+id/unpublished_poems"

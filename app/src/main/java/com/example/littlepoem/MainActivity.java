@@ -6,6 +6,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -26,7 +27,13 @@ public class MainActivity extends AppCompatActivity {
     Bundle bundle;
 
     //Фрагменты
-    private Fragment main_fragment, about_app_fragment, settings_fragment, read_poem_fragment, profile_fragment;
+    private Fragment main_fragment,
+            about_app_fragment,
+            settings_fragment,
+            moderator_poems_fragment,
+            moderator_reviews_fragment,
+            moderator_complaints_fragment,
+            profile_fragment;
 
     //Меню
     private ListView mDrawerList;
@@ -71,7 +78,9 @@ public class MainActivity extends AppCompatActivity {
             main_fragment = getCurrentMainFragment();
             about_app_fragment = new AboutAppFragment();
             settings_fragment = new SettingsFragment();
-            read_poem_fragment = new ReadPoemFragment();
+            moderator_poems_fragment = new ModeratorPoemsFragment();
+            moderator_reviews_fragment = new ModeratorReviewsFragment();
+            moderator_complaints_fragment = new ModeratorComplaintsFragment();
             profile_fragment = getCurrentProfileFragment();
 
             bundle.putString("user_id", getCurrentUser());
@@ -93,38 +102,21 @@ public class MainActivity extends AppCompatActivity {
             mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    switch (position) {
-                        case (0): {
-                            bundle.putString("user_id", getCurrentUser());
-                            profile_fragment.setArguments(bundle);
-                            getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, profile_fragment).commit();
-                            mDrawerLayout.close();
-                            break;
-                        }
-                        case (1): {
-                            getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, main_fragment).commit();
-                            mDrawerLayout.close();
-                            break;
-                        }
-                        case (2): {
-                            getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, settings_fragment).commit();
-                            mDrawerLayout.close();
-                            break;
-                        }
-                        case (3): {
-                            getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, about_app_fragment).commit();
-                            mDrawerLayout.close();
-                            break;
-                        }
-                        case (4): {
-                            usersDB.id = null;
-                            resetCurrentUser();
-                            Intent intent = new Intent(view.getContext(), LoginActivity.class);
-                            startActivity(intent);
-                            overridePendingTransition(0, 0);
-                            finish();
-                            break;
-                        }
+                    NavItem clickedItem = (NavItem) parent.getItemAtPosition(position);
+                    Fragment clickedFragment = clickedItem.mFragment;
+                    if (clickedFragment == null) {
+                        usersDB.id = null;
+                        resetCurrentUser();
+                        Intent intent = new Intent(view.getContext(), LoginActivity.class);
+                        startActivity(intent);
+                        overridePendingTransition(0, 0);
+                        finish();
+                    }
+                    else {
+                        bundle.putString("user_id", getCurrentUser());
+                        clickedFragment.setArguments(bundle);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, clickedFragment).commit();
+                        mDrawerLayout.close();
                     }
                 }
             });
@@ -137,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
         overridePendingTransition(0, 0);
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     public void updateMenu(String id) {
         Converter converter = new Converter();
 
@@ -154,11 +147,18 @@ public class MainActivity extends AppCompatActivity {
 
         //Элементы меню
         mNavItems.removeAll(mNavItems);
-        mNavItems.add(new NavItem(name_text, role_text, profile_picture));
-        mNavItems.add(new NavItem(this.getResources().getString(R.string.home_button_title), "", converter.drawableToBitmap(getApplicationContext().getResources().getDrawable(R.drawable.ic_home_button))));
-        mNavItems.add(new NavItem(this.getResources().getString(R.string.settings_button_title), "", converter.drawableToBitmap(getApplicationContext().getResources().getDrawable(R.drawable.ic_settings_button))));
-        mNavItems.add(new NavItem(this.getResources().getString(R.string.info_button_title), "", converter.drawableToBitmap(getApplicationContext().getResources().getDrawable(R.drawable.ic_info_button))));
-        mNavItems.add(new NavItem(this.getResources().getString(R.string.logout_button_title), "", converter.drawableToBitmap(getApplicationContext().getResources().getDrawable(R.drawable.ic_logout_button))));
+        mNavItems.add(new NavItem(name_text, role_text, profile_picture, profile_fragment));
+        if (usersDB.role.equals(this.getResources().getString(R.string.moderator))) {
+            mNavItems.add(new NavItem(this.getResources().getString(R.string.poems), "", converter.drawableToBitmap(getApplicationContext().getResources().getDrawable(R.drawable.ic_poems_button)), moderator_poems_fragment));
+            mNavItems.add(new NavItem(this.getResources().getString(R.string.reviews), "", converter.drawableToBitmap(getApplicationContext().getResources().getDrawable(R.drawable.ic_reviews_menu_button)), moderator_reviews_fragment));
+            mNavItems.add(new NavItem(this.getResources().getString(R.string.complaints), "", converter.drawableToBitmap(getApplicationContext().getResources().getDrawable(R.drawable.ic_complaint_menu_button)), moderator_complaints_fragment));
+        }
+        else {
+            mNavItems.add(new NavItem(this.getResources().getString(R.string.home_button_title), "", converter.drawableToBitmap(getApplicationContext().getResources().getDrawable(R.drawable.ic_home_button)), main_fragment));
+        }
+        mNavItems.add(new NavItem(this.getResources().getString(R.string.settings_button_title), "", converter.drawableToBitmap(getApplicationContext().getResources().getDrawable(R.drawable.ic_settings_button)), settings_fragment));
+        mNavItems.add(new NavItem(this.getResources().getString(R.string.info_button_title), "", converter.drawableToBitmap(getApplicationContext().getResources().getDrawable(R.drawable.ic_info_button)), about_app_fragment));
+        mNavItems.add(new NavItem(this.getResources().getString(R.string.logout_button_title), "", converter.drawableToBitmap(getApplicationContext().getResources().getDrawable(R.drawable.ic_logout_button)), null));
 
         //Инициализация меню
         mDrawerPane = (RelativeLayout) findViewById(R.id.menuView);
@@ -216,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
                 return new ReaderMainFragment();
             }
 
-            return new ModeratorMainFragment();
+            return new ModeratorPoemsFragment();
         }
         else {
             return new ErrorMainFragment();

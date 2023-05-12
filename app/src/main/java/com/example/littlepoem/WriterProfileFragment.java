@@ -63,24 +63,6 @@ public class WriterProfileFragment extends Fragment {
         role.setText(profileUserDB.role);
         profile_picture.setImageBitmap(profileUserDB.picture);
 
-        List<Poem> myPoems = poemsDB.selectUsersPoems(getArguments().getString("user_id"));
-        PoemListAdapter adapterMyPoems = new PoemListAdapter(getContext(), myPoems);
-        myPoemsListView.setAdapter(adapterMyPoems);
-
-        //Нажатие на стихотворение
-        myPoemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Poem clickedPoem = (Poem) parent.getItemAtPosition(position);
-                if (currentUserDB.role.equals(getResources().getString(R.string.moderator))) {
-                    ((MainActivity)getActivity()).openReadPoemFragment(clickedPoem, new ModeratePoemFragment());
-                }
-                else {
-                    ((MainActivity)getActivity()).openReadPoemFragment(clickedPoem, new ReadPoemFragment());
-                }
-            }
-        });
-
         action_button.setVisibility(View.INVISIBLE);
         liked_poems_title.setVisibility(View.GONE);
         likedPoemsListView.setVisibility(View.GONE);
@@ -93,10 +75,27 @@ public class WriterProfileFragment extends Fragment {
             liked_poems_title.setVisibility(View.VISIBLE);
             likedPoemsListView.setVisibility(View.VISIBLE);
 
+            List<Poem> myPoems = poemsDB.selectUsersPoems(getArguments().getString("user_id"));
+            PoemListAdapter adapterMyPoems = new PoemListAdapter(getContext(), myPoems);
+            myPoemsListView.setAdapter(adapterMyPoems);
+
             List<Poem> likedPoems = poemsDB.selectUsersLikedPoems(liked_poems);
             PoemListAdapter adapterLikedPoems = new PoemListAdapter(getContext(), likedPoems);
             likedPoemsListView.setAdapter(adapterLikedPoems);
 
+            //Нажатие на стихотворение
+            myPoemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Poem clickedPoem = (Poem) parent.getItemAtPosition(position);
+                    if (currentUserDB.role.equals(getResources().getString(R.string.moderator))) {
+                        ((MainActivity)getActivity()).openReadPoemFragment(clickedPoem, new ModeratePoemFragment());
+                    }
+                    else {
+                        ((MainActivity)getActivity()).openReadPoemFragment(clickedPoem, new ReadPoemFragment());
+                    }
+                }
+            });
             likedPoemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -125,10 +124,28 @@ public class WriterProfileFragment extends Fragment {
             liked_poems_title.setVisibility(View.VISIBLE);
             likedPoemsListView.setVisibility(View.VISIBLE);
 
+
+            List<Poem> myPoems = poemsDB.selectUsersPoems(getArguments().getString("user_id"));
+            PoemListAdapter adapterMyPoems = new PoemListAdapter(getContext(), myPoems);
+            myPoemsListView.setAdapter(adapterMyPoems);
+
             List<Poem> likedPoems = poemsDB.selectUsersLikedPoems(liked_poems);
             PoemListAdapter adapterLikedPoems = new PoemListAdapter(getContext(), likedPoems);
             likedPoemsListView.setAdapter(adapterLikedPoems);
 
+            //Нажатие на стихотворение
+            myPoemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Poem clickedPoem = (Poem) parent.getItemAtPosition(position);
+                    if (currentUserDB.role.equals(getResources().getString(R.string.moderator))) {
+                        ((MainActivity)getActivity()).openReadPoemFragment(clickedPoem, new ModeratePoemFragment());
+                    }
+                    else {
+                        ((MainActivity)getActivity()).openReadPoemFragment(clickedPoem, new ReadPoemFragment());
+                    }
+                }
+            });
             likedPoemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -151,6 +168,24 @@ public class WriterProfileFragment extends Fragment {
         }
         else {
             poems_title.setText(this.getResources().getString(R.string.poems));
+
+            List<Poem> myPoems = poemsDB.selectUsersPublishedPoems(getArguments().getString("user_id"));
+            PoemListAdapter adapterMyPoems = new PoemListAdapter(getContext(), myPoems);
+            myPoemsListView.setAdapter(adapterMyPoems);
+
+            //Нажатие на стихотворение
+            myPoemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Poem clickedPoem = (Poem) parent.getItemAtPosition(position);
+                    if (currentUserDB.role.equals(getResources().getString(R.string.moderator))) {
+                        ((MainActivity)getActivity()).openReadPoemFragment(clickedPoem, new ModeratePoemFragment());
+                    }
+                    else {
+                        ((MainActivity)getActivity()).openReadPoemFragment(clickedPoem, new ReadPoemFragment());
+                    }
+                }
+            });
         }
     }
 }

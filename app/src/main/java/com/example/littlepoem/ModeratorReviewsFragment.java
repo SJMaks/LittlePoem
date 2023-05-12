@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,9 +16,10 @@ import androidx.fragment.app.Fragment;
 
 import java.util.List;
 
-public class ModeratorMainFragment extends Fragment {
+public class ModeratorReviewsFragment extends Fragment {
 
     private EditText edit_search_text;
+    private TextView type;
     private ImageView filter_button, search_button;
     private ListView unpublishedPoemsListView;
 
@@ -31,6 +33,7 @@ public class ModeratorMainFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_moderator_main, container, false);
 
         edit_search_text = v.findViewById(R.id.edit_search_text);
+        type = v.findViewById(R.id.type_textView);
         filter_button = v.findViewById(R.id.filter_button);
         search_button = v.findViewById(R.id.search_button);
         unpublishedPoemsListView = v.findViewById(R.id.unpublished_poems);
@@ -40,6 +43,8 @@ public class ModeratorMainFragment extends Fragment {
         poemsDB = new PoemsDB(dbHelper, getContext());
 
         usersDB.getDataByID(((MainActivity)getActivity()).getCurrentUser());
+
+        type.setText(getContext().getResources().getString(R.string.reviews));
 
         List<Poem> unpublishedPoems = poemsDB.selectUnpublishedPoems();
         PoemListAdapter adapter = new PoemListAdapter(getContext(), unpublishedPoems);

@@ -12,18 +12,22 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NavItem {
     String mTitle;
     String mSubtitle;
     Bitmap mIcon;
+    Fragment mFragment;
 
-    public NavItem(String title, String subtitle, Bitmap icon) {
+    public NavItem(String title, String subtitle, Bitmap icon, Fragment fragment) {
         mTitle = title;
         mSubtitle = subtitle;
         mIcon = icon;
+        mFragment = fragment;
     }
 }
 
@@ -45,6 +49,10 @@ class DrawerListAdapter extends BaseAdapter {
     @Override
     public Object getItem(int position) {
         return mNavItems.get(position);
+    }
+
+    public Fragment getFragment(int position) {
+        return mNavItems.get(position).mFragment;
     }
 
     @Override

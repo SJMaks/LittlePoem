@@ -95,6 +95,13 @@ public class PoemsDB {
         return selectPoems(selection, selectionArgs);
     }
 
+    public List<Poem> selectUsersPublishedPoems(String buf_id) {
+        String selection = "author = ? AND publication_state = ?";
+        String[] selectionArgs = { buf_id, "1" };
+
+        return selectPoems(selection, selectionArgs);
+    }
+
     public List<Poem> selectNewPoems() {
         Calendar calendar = Calendar.getInstance();
 

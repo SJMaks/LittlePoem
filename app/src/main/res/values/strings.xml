@@ -64,6 +64,7 @@
     <string name="review">Отзыв</string>
     <string name="reviews">Отзывы</string>
     <string name="reviews_underline"><u>Отзывы</u></string>
+    <string name="complaints">Жалобы</string>
     <string name="input_your_poem_text">Введите текст своего стихотворения\n\n\n\n\n\n\n\n\n\n</string>
     <string-array name="poetry_genres">
         <item>Ода</item>
