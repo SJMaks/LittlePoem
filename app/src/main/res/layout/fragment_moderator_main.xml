@@ -80,7 +80,7 @@
                 android:textSize="22sp" />
 
             <com.example.littlepoem.WrapContentListView
-                android:id="@+id/unpublished_poems"
+                android:id="@+id/list_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10sp"

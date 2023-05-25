@@ -90,7 +90,7 @@
                 android:textSize="25sp" />
 
             <TextView
-                android:id="@+id/my_poems_textView"
+                android:id="@+id/published_poems_textView"
                 android:layout_width="match_parent"
                 android:layout_height="50sp"
                 android:gravity="center"
@@ -108,7 +108,7 @@
                 android:layout_marginTop="10sp"/>
 
             <TextView
-                android:id="@+id/new_poems_textView"
+                android:id="@+id/rejected_poems_textView"
                 android:layout_width="match_parent"
                 android:layout_height="50sp"
                 android:gravity="center"
@@ -120,6 +120,24 @@
 
             <com.example.littlepoem.WrapContentListView
                 android:id="@+id/rejected_poems"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10sp"
+                android:layout_marginTop="10sp"/>
+
+            <TextView
+                android:id="@+id/deleted_poems_textView"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:gravity="center"
+                android:layout_marginTop="10sp"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/deleted_poems"
+                android:textColor="@color/white"
+                android:textSize="25sp" />
+
+            <com.example.littlepoem.WrapContentListView
+                android:id="@+id/deleted_poems"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10sp"

@@ -29,6 +29,7 @@ public class WriterMainFragment extends Fragment {
     private DBHelper dbHelper;
     private UsersDB usersDB;
     private PoemsDB poemsDB;
+    private ComplaintsDB complaintsDB;
 
     @Nullable
     @Override
@@ -45,6 +46,7 @@ public class WriterMainFragment extends Fragment {
         dbHelper = new DBHelper(getContext());
         usersDB = new UsersDB(dbHelper, getContext());
         poemsDB = new PoemsDB(dbHelper, getContext());
+        complaintsDB = new ComplaintsDB(dbHelper, getContext());
 
         usersDB.getDataByID(((MainActivity)getActivity()).getCurrentUser());
 
@@ -78,6 +80,7 @@ public class WriterMainFragment extends Fragment {
             public void onClick(View view) {
                 usersDB.clearDB();
                 poemsDB.clearDB();
+                complaintsDB.clearDB();
                 ((MainActivity)getActivity()).resetCurrentUser();
             }
         });

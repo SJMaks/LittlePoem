@@ -65,9 +65,9 @@ public class ReaderProfileFragment extends Fragment {
         if (currentUserDB.id.equals(profileUserDB.id)) {
             action_button.setVisibility(View.VISIBLE);
             action_button.setImageDrawable(this.getResources().getDrawable(R.drawable.ic_settings_button_light));
-            liked_poems = TextUtils.join(",", profileUserDB.liked_poems);
             liked_poems_title.setVisibility(View.VISIBLE);
             likedPoemsListView.setVisibility(View.VISIBLE);
+            liked_poems = TextUtils.join(",", profileUserDB.liked_poems);
 
             List<Poem> likedPoems = poemsDB.selectUsersLikedPoems(liked_poems);
             PoemListAdapter adapterLikedPoems = new PoemListAdapter(getContext(), likedPoems);
@@ -96,9 +96,9 @@ public class ReaderProfileFragment extends Fragment {
         else if (currentUserDB.role.equals(this.getResources().getString(R.string.moderator))) {
             action_button.setVisibility(View.VISIBLE);
             action_button.setImageDrawable(this.getResources().getDrawable(R.drawable.ic_ban_button));
-            liked_poems = TextUtils.join(",", profileUserDB.liked_poems);
             liked_poems_title.setVisibility(View.VISIBLE);
             likedPoemsListView.setVisibility(View.VISIBLE);
+            liked_poems = TextUtils.join(",", profileUserDB.liked_poems);
 
             List<Poem> likedPoems = poemsDB.selectUsersLikedPoems(liked_poems);
             PoemListAdapter adapterLikedPoems = new PoemListAdapter(getContext(), likedPoems);

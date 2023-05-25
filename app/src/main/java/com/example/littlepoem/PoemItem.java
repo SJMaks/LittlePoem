@@ -57,8 +57,8 @@ class PoemListAdapter extends BaseAdapter {
             ratingState.setImageDrawable(convertView.getResources().getDrawable(R.drawable.ic_reject));
         }
         else if (poem.getPublicationState() == 3) {
-            ratingView.setText(convertView.getResources().getString(R.string.moderate_title));
-            ratingState.setImageDrawable(convertView.getResources().getDrawable(R.drawable.ic_complaint));
+            ratingView.setText(convertView.getResources().getString(R.string.deleted));
+            ratingState.setImageDrawable(convertView.getResources().getDrawable(R.drawable.ic_reject));
         }
         else {
             ratingView.setText(String.format("%.1f", poem.getRating()) + "/5");

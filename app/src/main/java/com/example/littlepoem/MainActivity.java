@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -176,6 +177,11 @@ public class MainActivity extends AppCompatActivity {
         bundle.putSerializable("poem", poem);
         read_fragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, read_fragment).commit();
+    }
+    public void openReadComplaintFragment(Complaint complaint, Fragment complaint_fragment) {
+        bundle.putSerializable("complaint", complaint);
+        complaint_fragment.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, complaint_fragment).commit();
     }
 
     public void openProfileFragment(String buf_id) {

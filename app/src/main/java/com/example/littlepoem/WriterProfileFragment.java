@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class WriterProfileFragment extends Fragment {
@@ -71,17 +72,17 @@ public class WriterProfileFragment extends Fragment {
             poems_title.setText(this.getResources().getString(R.string.my_poems));
             action_button.setVisibility(View.VISIBLE);
             action_button.setImageDrawable(this.getResources().getDrawable(R.drawable.ic_settings_button_light));
-            liked_poems = TextUtils.join(",", profileUserDB.liked_poems);
             liked_poems_title.setVisibility(View.VISIBLE);
             likedPoemsListView.setVisibility(View.VISIBLE);
-
-            List<Poem> myPoems = poemsDB.selectUsersPoems(getArguments().getString("user_id"));
-            PoemListAdapter adapterMyPoems = new PoemListAdapter(getContext(), myPoems);
-            myPoemsListView.setAdapter(adapterMyPoems);
+            liked_poems = TextUtils.join(",", profileUserDB.liked_poems);
 
             List<Poem> likedPoems = poemsDB.selectUsersLikedPoems(liked_poems);
             PoemListAdapter adapterLikedPoems = new PoemListAdapter(getContext(), likedPoems);
             likedPoemsListView.setAdapter(adapterLikedPoems);
+
+            List<Poem> myPoems = poemsDB.selectUsersPoems(getArguments().getString("user_id"));
+            PoemListAdapter adapterMyPoems = new PoemListAdapter(getContext(), myPoems);
+            myPoemsListView.setAdapter(adapterMyPoems);
 
             //Нажатие на стихотворение
             myPoemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -120,18 +121,17 @@ public class WriterProfileFragment extends Fragment {
             poems_title.setText(this.getResources().getString(R.string.poems));
             action_button.setVisibility(View.VISIBLE);
             action_button.setImageDrawable(this.getResources().getDrawable(R.drawable.ic_ban_button));
-            liked_poems = TextUtils.join(",", profileUserDB.liked_poems);
             liked_poems_title.setVisibility(View.VISIBLE);
             likedPoemsListView.setVisibility(View.VISIBLE);
-
-
-            List<Poem> myPoems = poemsDB.selectUsersPoems(getArguments().getString("user_id"));
-            PoemListAdapter adapterMyPoems = new PoemListAdapter(getContext(), myPoems);
-            myPoemsListView.setAdapter(adapterMyPoems);
+            liked_poems = TextUtils.join(",", profileUserDB.liked_poems);
 
             List<Poem> likedPoems = poemsDB.selectUsersLikedPoems(liked_poems);
             PoemListAdapter adapterLikedPoems = new PoemListAdapter(getContext(), likedPoems);
             likedPoemsListView.setAdapter(adapterLikedPoems);
+
+            List<Poem> myPoems = poemsDB.selectUsersPoems(getArguments().getString("user_id"));
+            PoemListAdapter adapterMyPoems = new PoemListAdapter(getContext(), myPoems);
+            myPoemsListView.setAdapter(adapterMyPoems);
 
             //Нажатие на стихотворение
             myPoemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

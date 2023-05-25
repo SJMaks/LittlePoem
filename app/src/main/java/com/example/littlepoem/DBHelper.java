@@ -34,6 +34,14 @@ public class DBHelper extends SQLiteOpenHelper{
     public static final String KEY_PUBLICATION_STATE = "publication_state";
     public static final String KEY_MODERATOR = "moderator";
 
+    //Таблица жалоб
+    public static final String TABLE_COMPLAINTS = "complaints";
+
+    public static final String KEY_POEM_ID = "poem_id";
+    public static final String KEY_REVIEW_ID = "review_id";
+    public static final String KEY_USER_ID = "user_id";
+    public static final String KEY_COMPLAINT_TEXT = "complaint_text";
+
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -47,12 +55,16 @@ public class DBHelper extends SQLiteOpenHelper{
                 + " integer primary key," + KEY_TITLE + " text," + KEY_TEXT + " text," +
                 KEY_TEXT_ALIGNMENT + " integer," + KEY_AUTHOR + " integer," + KEY_GENRE + " text," + KEY_RATING + " float," +
                 KEY_PUBLICATION_DATE + " date," + KEY_PUBLICATION_STATE + " integer," + KEY_MODERATOR + " integer)");
+        db.execSQL("create table " + TABLE_COMPLAINTS + "(" + KEY_ID
+                + " integer primary key," + KEY_POEM_ID + " integer," + KEY_REVIEW_ID + " integer,"
+                + KEY_USER_ID + " integer," + KEY_COMPLAINT_TEXT + " text)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("drop table if exists " + TABLE_USERS);
         db.execSQL("drop table if exists " + TABLE_POEMS);
+        db.execSQL("drop table if exists " + TABLE_COMPLAINTS);
 
         onCreate(db);
 

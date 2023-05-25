@@ -21,11 +21,12 @@ public class ModeratorComplaintsFragment extends Fragment {
     private EditText edit_search_text;
     private TextView type;
     private ImageView filter_button, search_button;
-    private ListView unpublishedPoemsListView;
+    private ListView complaintsListView;
 
     private DBHelper dbHelper;
     private UsersDB usersDB;
     private PoemsDB poemsDB;
+    private ComplaintsDB complaintsDB;
 
     @Nullable
     @Override
@@ -36,26 +37,27 @@ public class ModeratorComplaintsFragment extends Fragment {
         type = v.findViewById(R.id.type_textView);
         filter_button = v.findViewById(R.id.filter_button);
         search_button = v.findViewById(R.id.search_button);
-        unpublishedPoemsListView = v.findViewById(R.id.unpublished_poems);
+        complaintsListView = v.findViewById(R.id.list_view);
 
         dbHelper = new DBHelper(getContext());
         usersDB = new UsersDB(dbHelper, getContext());
         poemsDB = new PoemsDB(dbHelper, getContext());
+        complaintsDB = new ComplaintsDB(dbHelper, getContext());
 
         usersDB.getDataByID(((MainActivity)getActivity()).getCurrentUser());
 
         type.setText(getContext().getResources().getString(R.string.complaints));
 
-        List<Poem> unpublishedPoems = poemsDB.selectUnpublishedPoems();
-        PoemListAdapter adapter = new PoemListAdapter(getContext(), unpublishedPoems);
-        unpublishedPoemsListView.setAdapter(adapter);
+        List<Complaint> complaints = complaintsDB.selectComplaints();
+        ComplaintListAdapter adapter = new ComplaintListAdapter(getContext(), complaints);
+        complaintsListView.setAdapter(adapter);
 
         //Нажатие на стихотворение
-        unpublishedPoemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        complaintsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Poem clickedPoem = (Poem) parent.getItemAtPosition(position);
-                ((MainActivity)getActivity()).openReadPoemFragment(clickedPoem, new ModeratePoemFragment());
+                Complaint clickedComplaint = (Complaint) parent.getItemAtPosition(position);
+                ((MainActivity)getActivity()).openReadComplaintFragment(clickedComplaint, new ReadComplaintFragment());
             }
         });
 

@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5sp"
-        android:layout_marginHorizontal="10sp"
+        android:layout_marginHorizontal="50sp"
         android:gravity="center"
         android:text="@string/poem_name_title"
         android:fontFamily="sans-serif-medium"
@@ -23,13 +23,24 @@
         android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10sp"
+        android:layout_marginHorizontal="50sp"
         android:layout_below="@id/poem_title"
         android:gravity="center"
         android:text="@string/poem_author_title"
         android:fontFamily="sans-serif-medium"
         android:textColor="@color/grey"
         android:textSize="22sp" />
+
+    <ImageView
+        android:id="@+id/delete_button"
+        android:layout_width="40sp"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:src="@drawable/ic_delete_button"
+        android:layout_alignParentTop="true"
+        android:layout_alignBottom="@id/divider1"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10sp"/>
 
     <View
         android:id="@+id/divider1"
@@ -222,6 +233,7 @@
                     android:id="@+id/like_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20sp"
                     android:clickable="true"
                     android:src="@drawable/ic_like_button" />
 
@@ -229,7 +241,7 @@
                     android:id="@+id/copy_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="50sp"
+                    android:layout_marginHorizontal="20sp"
                     android:clickable="true"
                     android:src="@drawable/ic_copy_button" />
 
@@ -237,6 +249,7 @@
                     android:id="@+id/complaint_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20sp"
                     android:clickable="true"
                     android:src="@drawable/ic_complaint_button" />
 

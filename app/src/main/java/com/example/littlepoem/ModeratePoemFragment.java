@@ -23,6 +23,7 @@ public class ModeratePoemFragment extends Fragment {
     private TextView poemTitle, poemAuthor, poemGenre, poemText;
     private Button publishButton, rejectButton;
     private LinearLayout buttons, reviews_button;
+    private ImageView delete_button;
 
     Poem poem;
 
@@ -44,6 +45,7 @@ public class ModeratePoemFragment extends Fragment {
         reviews_button = v.findViewById(R.id.reviews_button);
         publishButton = v.findViewById(R.id.publish_button);
         rejectButton = v.findViewById(R.id.reject_button);
+        delete_button = v.findViewById(R.id.delete_button);
 
         dbHelper = new DBHelper(getContext());
         poemsDB = new PoemsDB(dbHelper, getContext());
@@ -109,6 +111,31 @@ public class ModeratePoemFragment extends Fragment {
             }
         });
 
+        delete_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setMessage(getContext().getResources().getString(R.string.confirm_delete_poem));
+                builder.setPositiveButton(getContext().getResources().getString(R.string.yes_button), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        poemsDB.deletePoem(poem.getId(),((MainActivity)getActivity()).getCurrentUser(), true);
+                        main_toast.setText(getContext().getResources().getString(R.string.successfully_deleted_poem));
+                        main_toast.cancel();
+                        main_toast.show();
+                        ((MainActivity)getActivity()).openFragment(((MainActivity)getActivity()).getCurrentMainFragment());
+                    }
+                });
+                builder.setNegativeButton(getContext().getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+
+                dialog.show();
+            }
+        });
+
         return v;
     }
 
@@ -119,11 +146,13 @@ public class ModeratePoemFragment extends Fragment {
 
         buttons.setVisibility(View.GONE);
         reviews_button.setVisibility(View.GONE);
-        if (poem.getPublicationState() == 0 || poem.getPublicationState() == 3) {
+        delete_button.setVisibility(View.GONE);
+        if (poem.getPublicationState() == 0) {
             buttons.setVisibility(View.VISIBLE);
         }
         if (poem.getPublicationState() == 1) {
             reviews_button.setVisibility(View.VISIBLE);
+            delete_button.setVisibility(View.VISIBLE);
         }
 
         poemTitle.setText(poem.getTitle());

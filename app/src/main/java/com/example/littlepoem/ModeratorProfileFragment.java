@@ -19,7 +19,7 @@ public class ModeratorProfileFragment extends Fragment {
 
     private TextView name;
     private ImageView profile_picture, settings_button;
-    private ListView publishedPoemsListView, rejectedPoemsListView;
+    private ListView publishedPoemsListView, rejectedPoemsListView, deletedPoemsListView;
 
     private DBHelper dbHelper;
     private UsersDB usersDB;
@@ -35,6 +35,7 @@ public class ModeratorProfileFragment extends Fragment {
         settings_button = v.findViewById(R.id.settings_button);
         publishedPoemsListView = v.findViewById(R.id.published_poems);
         rejectedPoemsListView = v.findViewById(R.id.rejected_poems);
+        deletedPoemsListView = v.findViewById(R.id.deleted_poems);
 
         dbHelper = new DBHelper(getContext());
         usersDB = new UsersDB(dbHelper, getContext());
@@ -50,6 +51,10 @@ public class ModeratorProfileFragment extends Fragment {
         PoemListAdapter adapterRejectedPoems = new PoemListAdapter(getContext(), rejectedPoems);
         rejectedPoemsListView.setAdapter(adapterRejectedPoems);
 
+        List<Poem> deletedPoems = poemsDB.selectModeratorDeletedPoems(((MainActivity)getActivity()).getCurrentUser());
+        PoemListAdapter adapterDeletedPoems = new PoemListAdapter(getContext(), deletedPoems);
+        deletedPoemsListView.setAdapter(adapterDeletedPoems);
+
         //Нажатие на стихотворение
         publishedPoemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -60,6 +65,14 @@ public class ModeratorProfileFragment extends Fragment {
         });
 
         rejectedPoemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Poem clickedPoem = (Poem) parent.getItemAtPosition(position);
+                ((MainActivity)getActivity()).openReadPoemFragment(clickedPoem, new ModeratePoemFragment());
+            }
+        });
+
+        deletedPoemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Poem clickedPoem = (Poem) parent.getItemAtPosition(position);

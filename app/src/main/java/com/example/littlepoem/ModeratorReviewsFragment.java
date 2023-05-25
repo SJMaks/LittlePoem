@@ -36,7 +36,7 @@ public class ModeratorReviewsFragment extends Fragment {
         type = v.findViewById(R.id.type_textView);
         filter_button = v.findViewById(R.id.filter_button);
         search_button = v.findViewById(R.id.search_button);
-        unpublishedPoemsListView = v.findViewById(R.id.unpublished_poems);
+        unpublishedPoemsListView = v.findViewById(R.id.list_view);
 
         dbHelper = new DBHelper(getContext());
         usersDB = new UsersDB(dbHelper, getContext());

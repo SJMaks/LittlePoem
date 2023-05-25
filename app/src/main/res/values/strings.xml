@@ -38,16 +38,20 @@
     <string name="notifications_settings_title">Push-уведомления</string>
     <string name="user_agreement_title"><u>Соглашение пользователя</u></string>
     <string name="save_settings">Сохранить изменения</string>
+    <string name="send">Отправить</string>
     <string name="save">Сохранить</string>
     <string name="cancel">Отмена</string>
     <string name="publish">Опубликовать</string>
     <string name="reject">Отклонить</string>
+    <string name="delete">Удалить</string>
     <string name="current_password">Текущий пароль</string>
     <string name="new_password">Новый пароль</string>
     <string name="user_name">Имя</string>
+    <string name="user">Пользователь</string>
     <string name="error_wrong_name">Некорректное имя</string>
     <string name="error_wrong_current_password">Неверный текущий пароль</string>
     <string name="error_main_fragment">Ошибка\nНе удалось войти в аккаунт</string>
+    <string name="error_empty_complaint_text">Укажите причину жалобы</string>
     <string name="change_settings_success">Данные успешно обновлены</string>
     <string name="new_poem_page_title">Новое стихотворение</string>
     <string name="poem_name_title_colon">Название:</string>
@@ -65,6 +69,8 @@
     <string name="reviews">Отзывы</string>
     <string name="reviews_underline"><u>Отзывы</u></string>
     <string name="complaints">Жалобы</string>
+    <string name="complaint">Жалоба</string>
+    <string name="complaint_text">Причина жалобы</string>
     <string name="input_your_poem_text">Введите текст своего стихотворения\n\n\n\n\n\n\n\n\n\n</string>
     <string-array name="poetry_genres">
         <item>Ода</item>
@@ -96,6 +102,7 @@
     <string name="confirm_change_settings">Вы уверены, что хотите изменить данные профиля?</string>
     <string name="confirm_publish_poem">Вы уверены, что хотите опубликовать стихотворение?</string>
     <string name="confirm_reject_poem">Вы уверены, что хотите отклонить стихотворение?</string>
+    <string name="confirm_delete_poem">Вы уверены, что хотите удалить стихотворение?</string>
     <string name="yes_button">Да</string>
     <string name="moderate_title">Проверка</string>
     <string name="poem_has_been_rejected">Отклонено</string>
@@ -104,4 +111,9 @@
     <string name="successfully_liked">Стихотворение добавлено в избранные</string>
     <string name="successfully_unliked">Стихотворение удалено из избранных</string>
     <string name="successfully_copied">Текст стихотворения скопирован</string>
+    <string name="successfully_complaint">Жалоба успешно отправлена</string>
+    <string name="successfully_deleted_poem">Стихотворение успешно удалено</string>
+    <string name="poem_deleted">Стихотворение удалено</string>
+    <string name="deleted">Удалено</string>
+    <string name="deleted_poems">Удалённые</string>
 </resources>

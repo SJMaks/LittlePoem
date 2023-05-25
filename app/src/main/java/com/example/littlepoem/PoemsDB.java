@@ -12,6 +12,7 @@ import android.text.TextUtils;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
@@ -58,6 +59,42 @@ public class PoemsDB {
         }
         else {
             return true;
+        }
+    }
+
+    public Poem getPoemByID(String buf_id) {
+        Cursor cursor = database.rawQuery("SELECT * FROM poems WHERE id = " + buf_id, null);
+        if (cursor.moveToFirst()) {
+            int title_index = cursor.getColumnIndex(DBHelper.KEY_TITLE);
+            int text_index = cursor.getColumnIndex(DBHelper.KEY_TEXT);
+            int text_alignment_index = cursor.getColumnIndex(DBHelper.KEY_TEXT_ALIGNMENT);
+            int author_index = cursor.getColumnIndex(DBHelper.KEY_AUTHOR);
+            int genre_index = cursor.getColumnIndex(DBHelper.KEY_GENRE);
+            int rating_index = cursor.getColumnIndex(DBHelper.KEY_RATING);
+            int publication_date_index = cursor.getColumnIndex(DBHelper.KEY_PUBLICATION_DATE);
+            int publication_state_index = cursor.getColumnIndex(DBHelper.KEY_PUBLICATION_STATE);
+            int moderator_index = cursor.getColumnIndex(DBHelper.KEY_MODERATOR);
+
+            id = buf_id;
+            title = cursor.getString(title_index);
+            text = Html.fromHtml(cursor.getString(text_index));
+            text_alignment = cursor.getInt(text_alignment_index);
+            author = cursor.getInt(author_index);
+            genre = cursor.getString(genre_index);
+            rating = cursor.getFloat(rating_index);
+            publication_date = cursor.getString(publication_date_index);
+            publication_state = cursor.getInt(publication_state_index);
+            moderator = cursor.getInt(moderator_index);
+
+            return new Poem(context, id, title, text, text_alignment, author, genre, rating, publication_date, publication_state, moderator);
+        }
+        return  null;
+    }
+
+    public void deletePoem(String buf_id, String buf_moderator_id, boolean isModerator) {
+        database.execSQL("update poems set publication_state = '3' where id = '" + buf_id + "'");
+        if (isModerator) {
+            database.execSQL("update poems set moderator = '" + buf_moderator_id + "' where id = '" + buf_id + "'");
         }
     }
 
@@ -131,13 +168,20 @@ public class PoemsDB {
         return selectPoems(selection, selectionArgs);
     }
 
+    public List<Poem> selectModeratorDeletedPoems(String buf_id) {
+        String selection = "moderator = ? AND publication_state = ?";
+        String[] selectionArgs = { buf_id, "3" };
+
+        return selectPoems(selection, selectionArgs);
+    }
+
     public List<Poem> selectUsersLikedPoems(String likedPoems) {
         if (likedPoems.startsWith(",")) {
             likedPoems = likedPoems.substring(1);
         }
         String[] poemIds = likedPoems.split(",");
 
-        String selection = "id IN (" + TextUtils.join(",", Collections.nCopies(poemIds.length, "?")) + ")";
+        String selection = "id IN (" + TextUtils.join(",", Collections.nCopies(poemIds.length, "?")) + ") AND publication_state = 1";
         String[] selectionArgs = poemIds;
 
         return selectPoems(selection, selectionArgs);

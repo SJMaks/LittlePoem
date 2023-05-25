@@ -137,7 +137,13 @@ public class UsersDB {
         if (cursor.moveToFirst()) {
             String currentLikedPoems = cursor.getString(0);
             if (!currentLikedPoems.contains(poemID)) { // check if the poem has already been liked
-                String newLikedPoems = currentLikedPoems + "," + poemID;
+                String newLikedPoems;
+                if (currentLikedPoems.isEmpty()) {
+                    newLikedPoems = poemID;
+                }
+                else {
+                    newLikedPoems = currentLikedPoems + "," + poemID;
+                }
                 ContentValues contentValues = new ContentValues();
                 contentValues.put(DBHelper.KEY_LIKED_POEMS, newLikedPoems);
                 database.update(DBHelper.TABLE_USERS, contentValues, "id = ?", new String[]{id});
@@ -151,7 +157,7 @@ public class UsersDB {
         if (cursor.moveToFirst()) {
             String currentLikedPoems = cursor.getString(0);
             if (currentLikedPoems.contains(poemID)) { // check if the poem has already been liked
-                String newLikedPoems = currentLikedPoems.replace(poemID, ""); // remove the poem ID from the string
+                String newLikedPoems = currentLikedPoems.replace(poemID + ',', ""); // remove the poem ID from the string
                 if (newLikedPoems.startsWith(",")) { // remove leading comma if it exists
                     newLikedPoems = newLikedPoems.substring(1);
                 }
